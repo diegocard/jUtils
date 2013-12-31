@@ -19,16 +19,34 @@ module.exports = function(grunt) {
           destination: 'docs'
         }
       }
+    },
+    qunit: {
+      all: {
+        options: {
+          urls: [
+            'http://localhost:8000/test/test.html',
+          ]
+        }
+      }
+    },
+    connect: {
+      server: {
+        options: {
+          port: 8000,
+          base: '.'
+        }
+      }
     }
   });
 
-  // Load the plugin that provides the "uglify" task.
+  // Modules
   grunt.loadNpmTasks('grunt-contrib-uglify');
-
-  // Load the plugin that provides the "jsdoc" task
+  grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-jsdoc');
 
-  // Default task(s).
+  // Tasks
   grunt.registerTask('default', ['uglify', 'jsdoc']);
+  grunt.registerTask('test', ['connect', 'qunit']);
 
 };

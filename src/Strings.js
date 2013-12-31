@@ -1,19 +1,11 @@
 /**
- * String utilities
- * @namespace
- * @memberOf JSUtils
- */
-JSUtils.String = JSUtils.String || {};
-
-
-/**
  * Format a string in a similar way to Java or C#.
  * @method format
- * @memberOf JSUtils.String
+ * @memberOf JSUtils.Strings
  * @param  {string} str Pre-format string.
  * @return {string}     Formatted string.
  */
-JSUtils.String.format = function (str) {
+JSUtils.Strings.format = function (str) {
 
   var args = Array.prototype.slice.call(arguments, 1),
       sprintfRegex = /\{(\d+)\}/g;
