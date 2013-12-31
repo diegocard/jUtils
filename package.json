@@ -1,0 +1,28 @@
+{
+  "name": "JSUtils",
+  "version": "0.0.1",
+  "description": "A set of JavaScript utilities",
+  "main": "Base.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:diegocard/JSUtils.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "utilities"
+  ],
+  "author": "Diego Cardozo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diegocard/JSUtils/issues"
+  },
+  "devDependencies": {
+    "grunt-cli": "~0.1.11",
+    "grunt": "~0.4.2",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-jsdoc": "~0.4.2"
+  }
+}
