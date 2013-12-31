@@ -4,6 +4,11 @@
  */
 JSUtils = {
   /**
+   * Array manipulation utilities
+   * @namespace
+   */
+  Arrays: {},
+  /**
    * DOM manipulation utilities
    * @namespace
    */
