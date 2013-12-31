@@ -46,7 +46,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsdoc');
 
   // Tasks
-  grunt.registerTask('default', ['uglify', 'jsdoc']);
   grunt.registerTask('test', ['connect', 'qunit']);
+  grunt.registerTask('doc', ['jsdoc']);
+  grunt.registerTask('default', ['uglify', 'test']);
 
 };
