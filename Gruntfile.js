@@ -5,10 +5,11 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+        report: 'min'
       },
       build: {
-        src: 'src/*.js',
+        src: ['src/Base.js', 'src/Arrays.js', 'src/Functions.js', 'src/Object.js', 'src/Patterns.js', 'src/Strings.js'],
         dest: 'JSUtils.min.js'
       }
     },
