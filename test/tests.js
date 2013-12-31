@@ -21,7 +21,11 @@ test("firstIndex", function() {
       cond1 = function(elem) {
         return elem === 2;
       },
-      array2 = ['aaa', 'b', 'c', 'd'];
+      array2 = ['a', 'bb', 'ccc', 'dddd'],
+      cond2 = function(elem) {
+        return elem.length === 3;
+      };
 
   ok(firstIndex(array1, cond1) === 1, "Format: Numeric array");
+  ok(firstIndex(array2, cond2) === 2, "Format: String array");
 });
