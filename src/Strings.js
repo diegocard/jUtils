@@ -5,7 +5,7 @@
  * @param  {string} str Pre-format string.
  * @return {string}     Formatted string.
  */
-JSUtils.Strings.format = function (str) {
+JSUtils.format = function (str) {
 
   var args = Array.prototype.slice.call(arguments, 1),
       sprintfRegex = /\{(\d+)\}/g;

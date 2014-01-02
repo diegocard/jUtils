@@ -7,7 +7,7 @@
  * @param  {Function} func  Condition (returns yes or no).
  * @return {Integer}        Array position is the element was found, -1 otherwise.
  */
-JSUtils.Arrays.firstIndex = function(array, func) {
+JSUtils.firstIndex = function(array, func) {
   for (var i=0, len=array.length; i<len; i+=1) {
     if (func(array[i])) {
       return i;
