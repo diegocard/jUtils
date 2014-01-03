@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: Strings.js</title>
+    <title>JSDoc: Module: JSUtils</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,33 +17,89 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: Strings.js</h1>
+    <h1 class="page-title">Module: JSUtils</h1>
     
     
 
 
+
+<section>
     
-    <section>
-        <article>
-            <pre class="prettyprint source"><code>/**
- * Format a string in a similar way to Java or C#.
- * @method format
- * @memberOf JSUtils.Strings
- * @param  {string} str Pre-format string.
- * @return {string}     Formatted string.
- */
-JSUtils.format = function (str) {
+<header>
+    <h2>
+    JSUtils
+    </h2>
+    
+</header>  
 
-  var args = Array.prototype.slice.call(arguments, 1),
-      sprintfRegex = /\{(\d+)\}/g;
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description">JSUtils main object</div>
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
 
-  return str.replace(sprintfRegex, function(match, number) {
-    return number in args ? args[number] : match;
-  });
-};
-</code></pre>
-        </article>
-    </section>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Base.js.html">Base.js</a>, <a href="Base.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</article>
+
+</section>  
 
 
 

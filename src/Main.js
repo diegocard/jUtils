@@ -1,6 +1,6 @@
 /**
  * JSUtils main object
- * @namespace
+ * @module JSUtils
  */
 (function (global) {
   "use strict";
@@ -13,15 +13,14 @@
   // Private variables
   var internal = {
     global: global,
+    namespaces: {},
   };
 
   global.JSUtils = {
-    
-    namespaces: {},
 
     /**
      * Returns the global object.
-     * @memberOf JSUtils.Base
+     * @memberOf JSUtils.Main
      * @return {Object} The global object.
      */
     getGlobal : function() {
@@ -30,7 +29,7 @@
 
     /**
      * Checks if the given object is equal to the global object.
-     * @memberOf JSUtils.Base
+     * @memberOf JSUtils.Main
      * @param  {Any} elem A given element.
      * @return {Boolean}  True if the given element is equal to the global object,
      *                    False otherwise.
@@ -43,40 +42,23 @@
       // TODO: Tests and doc
       var keys = [],
           key;
-      if (obj !== Object(obj))
+      if (!this.isObject(obj)) {
         throw new TypeError('Invalid object');
-      for (key in obj)
-        if (obj.hasOwnProperty(key))
+      }
+      for (key in obj) {
+        if (obj.hasOwnProperty(key)) {
           keys.push(key);
+        }
+      }
       return keys;
     },
 
     propertyCount : function(obj) {
       // TODO: Tests and doc
-      if (obj !== Object(obj))
+      if (obj !== Object(obj)) {
         throw new TypeError('Invalid object');
-      else
-        return this.getKeys(obj).length;
-    },
-
-    /**
-     * Concise and efficient forEach implementation.
-     * @memberOf JSUtils.Base
-     * @param  {Object} obj     Elements to be iterated.
-     * @param  {Function} func  Function applied to the elements in obj.
-     * @param  {Object} context Context for func.
-     */
-    forEach : function(obj, fun, context) {
-      var i, len, keys;
-      if (this.isObject(obj)) {
-        keys = this.getKeys(obj);
-        for (i=0, len=keys.length; i<len; i++) {
-          fun.call(context, obj[keys[i]], keys[i], obj);
-        }
       } else {
-        for (i=0, len=obj.length; i<len; i+=1) {
-          fun.call(context, obj[i], i, obj);
-        }
+        return this.getKeys(obj).length;
       }
     },
 
@@ -108,14 +90,6 @@
     isNumber : function(num){
       // TODO: Tests and doc
       return !isNaN(parseFloat(n)) && isFinite(n);
-    },
-
-    copy : function() {
-      // TODO: Implement
-    },
-
-    deepCopy : function() {
-      // TODO: Implement
     },
   };
   

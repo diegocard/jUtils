@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: Strings.js</title>
+    <title>JSDoc: Source: Arrays.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: Strings.js</h1>
+    <h1 class="page-title">Source: Arrays.js</h1>
     
     
 
@@ -26,20 +26,21 @@
     <section>
         <article>
             <pre class="prettyprint source"><code>/**
- * Format a string in a similar way to Java or C#.
- * @method format
- * @memberOf JSUtils.Strings
- * @param  {string} str Pre-format string.
- * @return {string}     Formatted string.
+ * Returns the position of the first element in the array that fulfills
+ * the given condition.
+ * @method firstIndex
+ * @memberOf JSUtils.Arrays
+ * @param  {Array} array    Array of items.
+ * @param  {Function} func  Condition (returns yes or no).
+ * @return {Integer}        Array position is the element was found, -1 otherwise.
  */
-JSUtils.format = function (str) {
-
-  var args = Array.prototype.slice.call(arguments, 1),
-      sprintfRegex = /\{(\d+)\}/g;
-
-  return str.replace(sprintfRegex, function(match, number) {
-    return number in args ? args[number] : match;
-  });
+JSUtils.firstIndex = function(array, func) {
+  for (var i=0, len=array.length; i&lt;len; i+=1) {
+    if (func(array[i])) {
+      return i;
+    }
+  }
+  return -1;
 };
 </code></pre>
         </article>

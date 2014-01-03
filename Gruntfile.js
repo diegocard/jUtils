@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         report: 'min'
       },
       build: {
-        src: ['src/Base.js', 'src/Arrays.js', 'src/Functions.js', 'src/Object.js', 'src/Patterns.js', 'src/Strings.js'],
+        src: ['src/Main.js', 'src/Common.js', 'src/Arrays.js', 'src/Functions.js', 'src/Object.js', 'src/Patterns.js', 'src/Strings.js'],
         dest: 'JSUtils.min.js'
       }
     },
