@@ -14,10 +14,10 @@ JSUtils.format = function (str) {
   });
 };
 
-JSUtils.microTemplate = function(str, params) {
+JSUtils.microTemplate = function(str, obj) {
   // TODO: Implement, test
-  for(var prop in params) {
-    str=str.replace(new RegExp('{{'+prop+'}}','g'), params[prop]);
+  for(var prop in obj) {
+    str=str.replace(new RegExp('{{'+prop+'}}','g'), obj[prop]);
   }
   return str;
 };
