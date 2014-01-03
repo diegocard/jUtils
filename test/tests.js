@@ -1,4 +1,4 @@
-/* ================================== BASE ================================= */
+/* ================================== MAIN ================================= */
 
 /**
  * JSUtils.getGlobal tests.
@@ -7,6 +7,8 @@
 test("getGlobal and isGLobal", function() {
   ok(JSUtils.isGlobal(JSUtils.getGlobal()), "getGlobal and isGlobal: working together");
 });
+
+/* ================================= COMMON ================================ */
 
 /**
  * JSUtils.forEach tests.
