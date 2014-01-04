@@ -48,7 +48,7 @@
     getKeys : function(obj) {
       var keys = [],
           key;
-      if (!this.isObject(obj)) {
+      if (!JSUtils.isObject(obj)) {
         throw new TypeError('Invalid object');
       }
       for (key in obj) {
@@ -59,12 +59,33 @@
       return keys;
     },
 
+    /**
+     * Concise and efficient forEach implementation.
+     * @memberOf JSUtils.Main
+     * @param  {Object} obj     Elements to be iterated.
+     * @param  {Function} func  Function applied to the elements in obj.
+     * @param  {Object} context Context for func.
+     */
+    forEach : function(obj, func, context) {
+      var i, len, keys;
+      if (JSUtils.isObject(obj)) {
+        keys = JSUtils.getKeys(obj);
+        for (i=0, len=keys.length; i<len; i+=1) {
+          func.call(context, obj[keys[i]], keys[i], obj);
+        }
+      } else {
+        for (i=0, len=obj.length; i<len; i+=1) {
+          func.call(context, obj[i], i, obj);
+        }
+      }
+    },
+
     propertyCount : function(obj) {
       // TODO: Tests and doc
       if (obj !== Object(obj)) {
         throw new TypeError('Invalid object');
       } else {
-        return this.getKeys(obj).length;
+        return JSUtils.getKeys(obj).length;
       }
     },
 
