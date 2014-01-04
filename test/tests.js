@@ -8,6 +8,33 @@ test("getGlobal and isGLobal", function() {
   ok(JSUtils.isGlobal(JSUtils.getGlobal()), "getGlobal and isGlobal: working together");
 });
 
+/**
+ * JSUtils.getKeys tests.
+ * @memberOf Tests
+ */
+test("getKeys", function() {
+  var obj1 = {},
+      obj2 = {
+        prop1: 1,
+        prop2: {},
+        prop3: [1,2,3],
+        prop4: function() {return null;},
+      },
+      obj2Props = ['prop1', ];
+  ok(JSUtils.getKeys(obj1).length === 0, "getKeys: Empty object");
+  ok(function() {
+    var result2 = JSUtils.getKeys(obj2);
+    return (
+      result2[0] === 'prop1' &&
+      result2[1] === 'prop2' &&
+      result2[2] === 'prop3' &&
+      result2[3] === 'prop4'
+    );
+  }, "getKeys: Several types of properties");
+  throws(JSUtils.getKeys([]), TypeError, "getKeys: Not an object");
+});
+
+
 /* ================================= COMMON ================================ */
 
 /**

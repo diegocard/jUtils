@@ -38,8 +38,14 @@
       return elem === internal.global;
     },
 
+    /**
+     * Returns an array with the property names for the given object.
+     * If obj is not an object, then an exception is thrown.
+     * @memberOf JSUtils.Main
+     * @param  {Object} obj The given object.
+     * @return {Array}      Array of property names.
+     */
     getKeys : function(obj) {
-      // TODO: Tests and doc
       var keys = [],
           key;
       if (!this.isObject(obj)) {
