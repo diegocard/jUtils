@@ -72,6 +72,19 @@ test("format", function() {
   ok(format1 === "abcdefg", "format: test with multiple arguments");
 });
 
+/**
+ * JSUtils.translate tests.
+ * @memberOf Tests
+ */
+test("translate", function() {
+  var translation1,
+      translation2;
+  ok(JSUtils.translate("Not defined", "Italian") === undefined, "translate: text not previously defined");
+  JSUtils.translate("This is a translation test", "Spanish", "Esta es una prueba de traducción");
+  translation1 = JSUtils.translate("This is a translation test", "Spanish");
+  ok(translation1 === "Esta es una prueba de traducción", "translate: successful translation");
+});
+
 /* ================================= ARRAYS ================================ */
 
 /**

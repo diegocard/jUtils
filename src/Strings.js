@@ -1,3 +1,5 @@
+// ================================== STRINGS =================================
+
 /**
  * Format a string in a similar way to Java or C#.
  * @method format
@@ -20,4 +22,44 @@ JSUtils.microTemplate = function(str, obj) {
     str=str.replace(new RegExp('{{'+prop+'}}','g'), obj[prop]);
   }
   return str;
+};
+
+JSUtils.hashCode = function(str){
+  //TODO: Doc, test
+  var hash = 0,
+      i, len, c;
+  if (str.length === 0) return hash;
+  for (i=0, len=str.length; i<len; i++) {
+      c     = str.charCodeAt(i);
+      hash  = ((hash<<5)-hash)+c;
+      hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
+/**
+ * Stored and returns text translations.
+ * @requires JUtils.hashCode
+ * @param  {String} str         Text to be translated.
+ * @param  {String} lang        The language.
+ * @param  {String} translation If specified, stores the translation.
+ * @return {String}             Translated text.
+ */
+JSUtils.translate = function(str, lang, translation) {
+  var translations = JSUtils.getVariable('translations'),
+      strHash;
+  if (!translations) translations = JSUtils.storeVariable('translations', {});
+  if (JSUtils.isString(str) && JSUtils.isString(lang)) {
+    strHash = JSUtils.hashCode(str + lang);
+    if (JSUtils.isString(translation)) {
+      // Store the translation
+      translations[strHash] = translation;
+      return translation;
+    } else {
+      // Return the translation
+      return translations[strHash];
+    }
+  } else {
+    throw new TypeError('You must provide at least a string and language');
+  }
 };
