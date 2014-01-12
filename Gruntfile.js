@@ -1,15 +1,27 @@
 module.exports = function(grunt) {
 
+  var header = '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+      allSources = ['src/Main.js', 'src/Common.js', 'src/Arrays.js', 'src/Functions.js', 'src/Object.js', 'src/Patterns.js', 'src/Strings.js'];
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    concat: {
+      options: {
+        banner: header,
+      },
+      dist: {
+        src: allSources,
+        dest: 'JSUtils.js'
+      },
+    },
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+        banner: header,
         report: 'min'
       },
       build: {
-        src: ['src/Main.js', 'src/Common.js', 'src/Arrays.js', 'src/Functions.js', 'src/Object.js', 'src/Patterns.js', 'src/Strings.js'],
+        src: allSources,
         dest: 'JSUtils.min.js'
       }
     },
@@ -41,6 +53,7 @@ module.exports = function(grunt) {
   });
 
   // Modules
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-connect');
@@ -49,6 +62,6 @@ module.exports = function(grunt) {
   // Tasks
   grunt.registerTask('test', ['connect', 'qunit']);
   grunt.registerTask('doc', ['jsdoc']);
-  grunt.registerTask('default', ['uglify', 'test']);
+  grunt.registerTask('default', ['concat', 'uglify', 'test']);
 
 };
