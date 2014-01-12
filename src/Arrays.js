@@ -1,3 +1,5 @@
+// ================================== ARRAYS ==================================
+
 /**
  * Returns the position of the first element in the array that fulfills
  * the given condition.
