@@ -1,3 +1,5 @@
+// =================================== MAIN ===================================
+
 /**
  * JSUtils main object
  * @module JSUtils
@@ -13,7 +15,6 @@
   // Private variables
   var internal = {
     global: global,
-    namespaces: {},
   };
 
   global.JSUtils = {
@@ -32,10 +33,42 @@
      * @memberOf JSUtils.Main
      * @param  {Any} elem A given element.
      * @return {Boolean}  True if the given element is equal to the global object,
-     *                    False otherwise.
+     *                    false otherwise.
      */
     isGlobal : function(elem) {
       return elem === internal.global;
+    },
+
+    /**
+     * Stores a private variable to JSUtils. 
+     * If the variable was already defined, it will be overridden.
+     * This variable can be used through the getVariable method.
+     * @param  {String} name  The variable's name.
+     * @param  {Any}    value Value stored in the given variable.
+     * @return {Bool}         True if the variable was successfully stored,
+     *                        false otherwise.
+     */
+    storeVariable : function(name, value) {
+      // TODO: Test
+      if (JSUtils.isString(name)) {
+        internal[name] = value;
+        return internal[name];
+      }
+      return false;
+    },
+
+    /**
+     * Given its name, returns the value stored in a private variable of the JSUtils module.
+     * Returns undefined if the variable was not defined previously.
+     * @param  {String} name Internal variable name.
+     * @return {Any}         Value stored in the private variable, if found.
+     */
+    getVariable : function(name) {
+      // TODO: Test
+      if (JSUtils.isString(name)) {
+        return internal[name];
+      }
+      return undefined;
     },
 
     /**
@@ -77,15 +110,6 @@
         for (i=0, len=obj.length; i<len; i+=1) {
           func.call(context, obj[i], i, obj);
         }
-      }
-    },
-
-    propertyCount : function(obj) {
-      // TODO: Tests and doc
-      if (obj !== Object(obj)) {
-        throw new TypeError('Invalid object');
-      } else {
-        return JSUtils.getKeys(obj).length;
       }
     },
 
