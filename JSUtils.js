@@ -8,17 +8,18 @@
 (function (global) {
   "use strict";
 
+  var JSUtils = global.JSUtils, 
+      // Private variables
+      internal = {
+        global: global,
+      };
+
   // Check that JSUtils is not already defined.
   if (global.JSUtils) {
     return;
   }
 
-  // Private variables
-  var internal = {
-    global: global,
-  };
-
-  global.JSUtils = {
+  JSUtils = {
 
     /**
      * Returns the global object.
@@ -50,6 +51,7 @@
      *                        false otherwise.
      */
     storeVariable : function(name, value) {
+      // TODO: Test
       if (JSUtils.isString(name)) {
         internal[name] = value;
         return internal[name];
@@ -64,6 +66,7 @@
      * @return {Any}         Value stored in the private variable, if found.
      */
     getVariable : function(name) {
+      // TODO: Test
       if (JSUtils.isString(name)) {
         return internal[name];
       }
@@ -114,7 +117,7 @@
 
     isArray : function(arr) {
       // TODO: Tests and doc
-      return toString.call(arr) == '[object Array]';
+      return Object.prototype.toString.call(arr) == '[object Array]';
     },
 
     isObject : function(obj) {
@@ -129,7 +132,7 @@
 
     isString : function(str) {
       // TODO: Tests and doc
-      return toString.call(str) == '[object String]';
+      return Object.prototype.toString.call(str) == '[object String]';
     },
 
     isUndefined : function(obj) {
@@ -139,12 +142,16 @@
 
     isNumber : function(num){
       // TODO: Tests and doc
-      return !isNaN(parseFloat(n)) && isFinite(n);
+      return !isNaN(parseFloat(num)) && isFinite(num);
     },
   };
   
+  global.JSUtils = JSUtils;
+  
 }(this));
 // ================================== COMMON ==================================
+
+/* global JSUtils:true */
 
 JSUtils.shallowCopy = function(obj) {
   // TODO: TEST, DOC
@@ -178,6 +185,8 @@ JSUtils.deepCopy = function(obj) {
 };
 // ================================== ARRAYS ==================================
 
+/* global JSUtils:true */
+
 /**
  * Returns the position of the first element in the array that fulfills
  * the given condition.
@@ -209,11 +218,15 @@ JSUtils.replace = function(array, element, condition) {
 
 // ================================= FUNCTIONS ================================
 
+/* global JSUtils:true */
+
 JSUtils.storeConstant = function() {
   //TODO: implement
 };
 
 // ================================== STRINGS =================================
+
+/* global JSUtils:true */
 
 /**
  * Format a string in a similar way to Java or C#.
