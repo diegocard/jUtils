@@ -7,17 +7,18 @@
 (function (global) {
   "use strict";
 
+  var JSUtils = global.JSUtils, 
+      // Private variables
+      internal = {
+        global: global,
+      };
+
   // Check that JSUtils is not already defined.
   if (global.JSUtils) {
     return;
   }
 
-  // Private variables
-  var internal = {
-    global: global,
-  };
-
-  global.JSUtils = {
+  JSUtils = {
 
     /**
      * Returns the global object.
@@ -115,7 +116,7 @@
 
     isArray : function(arr) {
       // TODO: Tests and doc
-      return toString.call(arr) == '[object Array]';
+      return Object.prototype.toString.call(arr) == '[object Array]';
     },
 
     isObject : function(obj) {
@@ -130,7 +131,7 @@
 
     isString : function(str) {
       // TODO: Tests and doc
-      return toString.call(str) == '[object String]';
+      return Object.prototype.toString.call(str) == '[object String]';
     },
 
     isUndefined : function(obj) {
@@ -140,8 +141,10 @@
 
     isNumber : function(num){
       // TODO: Tests and doc
-      return !isNaN(parseFloat(n)) && isFinite(n);
+      return !isNaN(parseFloat(num)) && isFinite(num);
     },
   };
+  
+  global.JSUtils = JSUtils;
   
 }(this));
