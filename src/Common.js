@@ -1,5 +1,7 @@
 // ================================== COMMON ==================================
 
+/* global JSUtils:true */
+
 JSUtils.shallowCopy = function(obj) {
   // TODO: TEST, DOC
   var copy, prop;

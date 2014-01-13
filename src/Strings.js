@@ -1,5 +1,7 @@
 // ================================== STRINGS =================================
 
+/* global JSUtils:true */
+
 /**
  * Format a string in a similar way to Java or C#.
  * @method format

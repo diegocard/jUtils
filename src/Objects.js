@@ -1,4 +1,6 @@
-// ********************************* OBJECTS **********************************
+// ================================= OBJECTS =================================
+
+/* global JSUtils:true */
 
 JSUtils.propertyCount = function(obj) {
   // TODO: Tests and doc
