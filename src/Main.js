@@ -121,7 +121,7 @@
 
     isObject : function(obj) {
       // TODO: DOC
-      return obj === Object(obj);
+      return obj === Object(obj) && !JSUtils.isFunction(obj);
     },
 
     isCommonObject : function(obj) {
@@ -130,13 +130,18 @@
     },
 
     isBoolean : function(bool) {
-      // TODO: Tests and doc
+      // TODO: DOC
       return bool === true || bool === false;
     },
 
     isString : function(str) {
       // TODO: Tests and doc
       return Object.prototype.toString.call(str) === '[object String]';
+    },
+
+    isFunction : function(fun) {
+      // TODO: Tests and doc
+      return Object.prototype.toString.call(fun) === '[object Function]';
     },
 
     isUndefined : function(obj) {

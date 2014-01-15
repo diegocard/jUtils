@@ -106,7 +106,7 @@ test("isArray", function() {
   var test1 = [],
       test2 = [1,2,3],
       test3 = ["a", "b", "c"],
-      invalidTests = [NaN, 1, {}, {a: 1}, undefined],
+      invalidTests = [NaN, 1, {}, {a: 1}, undefined, function() { return 1; }],
       i, len;
   ok(JSUtils.isArray(test1), "isArray: empty array");
   ok(JSUtils.isArray(test2), "isArray: numeric array");
@@ -128,7 +128,7 @@ test("isObject", function() {
       }},
       test4 = [],
       test5 = [1,2,3],
-      invalidTests = [NaN, 1, "str", undefined],
+      invalidTests = [NaN, 1, "str", undefined, function() { return 1; }],
       i, len;
   ok(JSUtils.isObject(test1), "isObject: empty object");
   ok(JSUtils.isObject(test2), "isObject: nested objects");
@@ -150,7 +150,7 @@ test("isCommonObject", function() {
       test3 = {a: 1, b: function() {
         return 1;
       }},
-      invalidTests = [NaN, 1, "str", undefined, [], [1,2,3]],
+      invalidTests = [NaN, 1, "str", undefined, [], [1,2,3], function() { return 1; }],
       i, len;
   ok(JSUtils.isCommonObject(test1), "isCommonObject: empty object");
   ok(JSUtils.isCommonObject(test2), "isCommonObject: nested objects");
@@ -161,6 +161,21 @@ test("isCommonObject", function() {
     ok(!JSUtils.isCommonObject(invalidTests[i]));
   }
 });
+
+/**
+ * JSUtils.isBoolean tests.
+ * @memberOf Tests
+ */
+test("isBoolean", function() {
+  var invalidTests = [{}, {a: 1}, NaN, 1, -1, 0, "str", undefined, [], [1,2,3], function() { return 1; }],
+      i, len;
+  ok(JSUtils.isBoolean(true), "isCommonObject: true");
+  ok(JSUtils.isBoolean(false), "isCommonObject: false");
+  for (i=0, len=invalidTests.length; i<len; i++) {
+    ok(!JSUtils.isBoolean(invalidTests[i]));
+  }
+});
+
 
 /* ================================= COMMON ================================ */
 
