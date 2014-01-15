@@ -9,14 +9,44 @@ test("getGlobal and isGLobal", function() {
 });
 
 /**
- * JSUtils.storeVariable and JSUtils.getVatiable tests.
+ * JSUtils.storeVariable and JSUtils.getVariale tests.
  * @memberOf Tests
  */
-test("storeVariable and getVariable", function() {
-  var obj1 = {};
-  throws(JSUtils.storeVariable(), TypeError, "storeVariable: No name specified");
-  throws(JSUtils.getVariable(), TypeError, "getVariable: No name specified");
-  // TODO: Continue
+test("JSUtils.storeVariable and JSUtils.getVariale", function() {
+  var obj1 = {a: 1, b: "str"},
+      obj2 = "string test",
+      obj3 = [1,2,3],
+      obj4; // undefined
+  throws(JSUtils.getVariable, TypeError, "getVariale: no name specified");
+  throws(JSUtils.storeVariable, TypeError, "getVariale: no name specified");
+  ok(
+    function() {
+      JSUtils.storeVariable("var1", obj1);
+      return JSUtils.getVariable("var1") === obj1;
+    },
+    "storeVariable and getVariable: Working together with objects"
+  );
+  ok(
+    function() {
+      JSUtils.storeVariable("var2", obj2);
+      return JSUtils.getVariable("var2") === obj2;
+    },
+    "storeVariable and getVariable: Working together with strings"
+  );
+  ok(
+    function() {
+      JSUtils.storeVariable("var3", obj3);
+      return JSUtils.getVariable("var3") === obj3;
+    },
+    "storeVariable and getVariable: Working together with arrays"
+  );
+  ok(
+    function() {
+      JSUtils.storeVariable("var4", obj4);
+      return JSUtils.getVariable("var4") === obj4;
+    },
+    "storeVariable and getVariable: Working together with undefined parameters"
+  );
 });
 
 /**
