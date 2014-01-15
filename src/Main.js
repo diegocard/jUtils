@@ -50,7 +50,6 @@
      *                        false otherwise.
      */
     storeVariable : function(name, value) {
-      // TODO: Test
       if (JSUtils.isString(name)) {
         internal[name] = value;
         return internal[name];
@@ -66,7 +65,6 @@
      * @return {Any}         Value stored in the private variable, if found.
      */
     getVariable : function(name) {
-      // TODO: Test
       if (JSUtils.isString(name)) {
         return internal[name];
       } else {
@@ -117,13 +115,18 @@
     },
 
     isArray : function(arr) {
-      // TODO: Tests and doc
-      return Object.prototype.toString.call(arr) == '[object Array]';
+      // TODO: DOC
+      return Object.prototype.toString.call(arr) === '[object Array]';
     },
 
     isObject : function(obj) {
-      // TODO: Tests and doc
+      // TODO: DOC
       return obj === Object(obj);
+    },
+
+    isCommonObject : function(obj) {
+      // TODO: DOC
+      return JSUtils.isObject(obj) && !JSUtils.isArray(obj);
     },
 
     isBoolean : function(bool) {
@@ -133,7 +136,7 @@
 
     isString : function(str) {
       // TODO: Tests and doc
-      return Object.prototype.toString.call(str) == '[object String]';
+      return Object.prototype.toString.call(str) === '[object String]';
     },
 
     isUndefined : function(obj) {

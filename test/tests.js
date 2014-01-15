@@ -75,9 +75,6 @@ test("getKeys", function() {
   throws(JSUtils.getKeys([]), TypeError, "getKeys: Not an object");
 });
 
-
-/* ================================= COMMON ================================ */
-
 /**
  * JSUtils.forEach tests.
  * @memberOf Tests
@@ -100,6 +97,73 @@ test("forEach", function() {
   ok(sum1 === 10, "forEach: numeric array");
   ok(sum2 === 6, "forEach: object properties");
 });
+
+/**
+ * JSUtils.isArray tests.
+ * @memberOf Tests
+ */
+test("isArray", function() {
+  var test1 = [],
+      test2 = [1,2,3],
+      test3 = ["a", "b", "c"],
+      invalidTests = [NaN, 1, {}, {a: 1}, undefined],
+      i, len;
+  ok(JSUtils.isArray(test1), "isArray: empty array");
+  ok(JSUtils.isArray(test2), "isArray: numeric array");
+  ok(JSUtils.isArray(test3), "isArray: string array");
+  for (i=0, len=invalidTests.length; i<len; i++) {
+    ok(!JSUtils.isArray(invalidTests[i]));
+  }
+});
+
+/**
+ * JSUtils.isObject tests.
+ * @memberOf Tests
+ */
+test("isObject", function() {
+  var test1 = {},
+      test2 = {a: 1, b: {c: 2}},
+      test3 = {a: 1, b: function() {
+        return 1;
+      }},
+      test4 = [],
+      test5 = [1,2,3],
+      invalidTests = [NaN, 1, "str", undefined],
+      i, len;
+  ok(JSUtils.isObject(test1), "isObject: empty object");
+  ok(JSUtils.isObject(test2), "isObject: nested objects");
+  ok(JSUtils.isObject(test3), "isObject: includes a function");
+  ok(JSUtils.isObject(test3), "isObject: empty array");
+  ok(JSUtils.isObject(test3), "isObject: array with elements");
+  for (i=0, len=invalidTests.length; i<len; i++) {
+    ok(!JSUtils.isObject(invalidTests[i]));
+  }
+});
+
+/**
+ * JSUtils.isCommonObject tests.
+ * @memberOf Tests
+ */
+test("isCommonObject", function() {
+  var test1 = {},
+      test2 = {a: 1, b: {c: 2}},
+      test3 = {a: 1, b: function() {
+        return 1;
+      }},
+      invalidTests = [NaN, 1, "str", undefined, [], [1,2,3]],
+      i, len;
+  ok(JSUtils.isCommonObject(test1), "isCommonObject: empty object");
+  ok(JSUtils.isCommonObject(test2), "isCommonObject: nested objects");
+  ok(JSUtils.isCommonObject(test3), "isCommonObject: includes a function");
+  ok(JSUtils.isCommonObject(test3), "isCommonObject: empty array");
+  ok(JSUtils.isCommonObject(test3), "isCommonObject: array with elements");
+  for (i=0, len=invalidTests.length; i<len; i++) {
+    ok(!JSUtils.isCommonObject(invalidTests[i]));
+  }
+});
+
+/* ================================= COMMON ================================ */
+
 
 
 /* ================================ STRINGS ================================ */
