@@ -54,8 +54,9 @@
       if (JSUtils.isString(name)) {
         internal[name] = value;
         return internal[name];
+      } else {
+        throw new TypeError("You must specify a variable name");
       }
-      return false;
     },
 
     /**
@@ -68,8 +69,9 @@
       // TODO: Test
       if (JSUtils.isString(name)) {
         return internal[name];
+      } else {
+        throw new TypeError("You must specify a variable name");
       }
-      return undefined;
     },
 
     /**

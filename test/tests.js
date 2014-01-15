@@ -1,11 +1,22 @@
 /* ================================== MAIN ================================= */
 
 /**
- * JSUtils.getGlobal tests.
+ * JSUtils.getGlobal and JSUtils.isGLobal tests.
  * @memberOf Tests
  */
 test("getGlobal and isGLobal", function() {
   ok(JSUtils.isGlobal(JSUtils.getGlobal()), "getGlobal and isGlobal: working together");
+});
+
+/**
+ * JSUtils.storeVariable and JSUtils.getVatiable tests.
+ * @memberOf Tests
+ */
+test("storeVariable and getVariable", function() {
+  var obj1 = {};
+  throws(JSUtils.storeVariable(), TypeError, "storeVariable: No name specified");
+  throws(JSUtils.getVariable(), TypeError, "getVariable: No name specified");
+  // TODO: Continue
 });
 
 /**
