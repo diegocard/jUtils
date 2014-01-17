@@ -13,10 +13,8 @@ test("getGlobal and isGLobal", function() {
  * @memberOf Tests
  */
 test("storeVariable and getVariable", function() {
-  var obj1 = {};
   throws(JSUtils.storeVariable(), TypeError, "storeVariable: No name specified");
   throws(JSUtils.getVariable(), TypeError, "getVariable: No name specified");
-  // TODO: Continue
 });
 
 /**

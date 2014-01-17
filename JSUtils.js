@@ -1,4 +1,4 @@
-/*! JSUtils 2014-01-14 */
+/*! JSUtils 2014-01-15 */
 // =================================== MAIN ===================================
 
 /**
@@ -8,7 +8,7 @@
 (function (global) {
   "use strict";
 
-  var JSUtils = global.JSUtils, 
+  var JSUtils = global.JSUtils,
       // Private variables
       internal = {
         global: global,
@@ -55,8 +55,9 @@
       if (JSUtils.isString(name)) {
         internal[name] = value;
         return internal[name];
+      } else {
+        throw new TypeError("You must specify a variable name");
       }
-      return false;
     },
 
     /**
@@ -69,8 +70,9 @@
       // TODO: Test
       if (JSUtils.isString(name)) {
         return internal[name];
+      } else {
+        throw new TypeError("You must specify a variable name");
       }
-      return undefined;
     },
 
     /**
@@ -84,7 +86,7 @@
       var keys = [],
           key;
       if (!JSUtils.isObject(obj)) {
-        throw new TypeError('Invalid object');
+        throw new TypeError("Invalid object");
       }
       for (key in obj) {
         if (obj.hasOwnProperty(key)) {
@@ -117,7 +119,7 @@
 
     isArray : function(arr) {
       // TODO: Tests and doc
-      return Object.prototype.toString.call(arr) == '[object Array]';
+      return Object.prototype.toString.call(arr) == "[object Array]";
     },
 
     isObject : function(obj) {
@@ -132,7 +134,7 @@
 
     isString : function(str) {
       // TODO: Tests and doc
-      return Object.prototype.toString.call(str) == '[object String]';
+      return Object.prototype.toString.call(str) === "[object String]";
     },
 
     isUndefined : function(obj) {
