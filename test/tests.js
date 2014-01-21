@@ -141,10 +141,10 @@ test("isObject", function() {
 });
 
 /**
- * JSUtils.isCommonObject tests.
+ * JSUtils.isOnlyObject tests.
  * @memberOf Tests
  */
-test("isCommonObject", function() {
+test("isOnlyObject", function() {
   var test1 = {},
       test2 = {a: 1, b: {c: 2}},
       test3 = {a: 1, b: function() {
@@ -152,13 +152,13 @@ test("isCommonObject", function() {
       }},
       invalidTests = [NaN, 1, "str", undefined, [], [1,2,3], function() { return 1; }],
       i, len;
-  ok(JSUtils.isCommonObject(test1), "isCommonObject: empty object");
-  ok(JSUtils.isCommonObject(test2), "isCommonObject: nested objects");
-  ok(JSUtils.isCommonObject(test3), "isCommonObject: includes a function");
-  ok(JSUtils.isCommonObject(test3), "isCommonObject: empty array");
-  ok(JSUtils.isCommonObject(test3), "isCommonObject: array with elements");
+  ok(JSUtils.isOnlyObject(test1), "isOnlyObject: empty object");
+  ok(JSUtils.isOnlyObject(test2), "isOnlyObject: nested objects");
+  ok(JSUtils.isOnlyObject(test3), "isOnlyObject: includes a function");
+  ok(JSUtils.isOnlyObject(test3), "isOnlyObject: empty array");
+  ok(JSUtils.isOnlyObject(test3), "isOnlyObject: array with elements");
   for (i=0, len=invalidTests.length; i<len; i++) {
-    ok(!JSUtils.isCommonObject(invalidTests[i]));
+    ok(!JSUtils.isOnlyObject(invalidTests[i]));
   }
 });
 
@@ -169,8 +169,8 @@ test("isCommonObject", function() {
 test("isBoolean", function() {
   var invalidTests = [{}, {a: 1}, NaN, 1, -1, 0, "str", undefined, [], [1,2,3], function() { return 1; }],
       i, len;
-  ok(JSUtils.isBoolean(true), "isCommonObject: true");
-  ok(JSUtils.isBoolean(false), "isCommonObject: false");
+  ok(JSUtils.isBoolean(true), "isOnlyObject: true");
+  ok(JSUtils.isBoolean(false), "isOnlyObject: false");
   for (i=0, len=invalidTests.length; i<len; i++) {
     ok(!JSUtils.isBoolean(invalidTests[i]));
   }

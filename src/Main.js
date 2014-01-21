@@ -114,23 +114,47 @@
       }
     },
 
+    /**
+     * Checks if the given element is an array.
+     * @memberOf JSUtils.Main
+     * @param  {Any}     arr Element to be checked.
+     * @return {Boolean}     True if the given element is an array,
+     *                       false otherwise.
+     */
     isArray : function(arr) {
-      // TODO: DOC
       return Object.prototype.toString.call(arr) == "[object Array]";
     },
 
+    /**
+     * Checks if the given element is an object (includes arrays but not functions).
+     * @memberOf JSUtils.Main
+     * @param  {Any}     obj Element to be checked.
+     * @return {Boolean}     True if the given element is an array,
+     *                       false otherwise.
+     */
     isObject : function(obj) {
-      // TODO: DOC
       return obj === Object(obj) && !JSUtils.isFunction(obj);
     },
 
-    isCommonObject : function(obj) {
-      // TODO: DOC
+    /**
+     * Checks if the given element is an object (does not include arrays and functions).
+     * @memberOf JSUtils.Main
+     * @param  {Any}     obj Element to be checked.
+     * @return {Boolean}     True if the given element is only an object,
+     *                       false otherwise.
+     */
+    isOnlyObject : function(obj) {
       return JSUtils.isObject(obj) && !JSUtils.isArray(obj);
     },
 
+    /**
+     * Checks if the given element is boolean.
+     * @memberOf JSUtils.Main
+     * @param  {Any}     bool Element to be checked.
+     * @return {Boolean}      True if the given element is a boolean value,
+     *                        false otherwise.
+     */
     isBoolean : function(bool) {
-      // TODO: DOC
       return bool === true || bool === false;
     },
 
