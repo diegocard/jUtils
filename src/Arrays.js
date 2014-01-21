@@ -30,3 +30,24 @@ JSUtils.replace = function(array, element, condition) {
   return array;
 };
 
+JSUtils.slugify = function(str) {
+  //TODO: Doc, test
+  var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;",
+      to   = "aaaaaeeeeeiiiiooooouuuunc------",
+      i, len;
+
+  str = str.replace(/^\s+|\s+$/g, ''); // trim
+  str = str.toLowerCase();
+
+  // remove accents, swap ñ for n, etc
+  for (i=0, len=from.length ; i<len ; i++) {
+    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+  }
+
+  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+    .replace(/-+/g, '-'); // collapse dashes
+
+  return str;
+};
+
