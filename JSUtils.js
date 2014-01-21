@@ -137,14 +137,25 @@
       return obj === Object(obj) && !JSUtils.isFunction(obj);
     },
 
-
+    /**
+     * Checks if the given element is an object (does not include arrays and functions).
+     * @memberOf JSUtils.Main
+     * @param  {Any}     obj Element to be checked.
+     * @return {Boolean}     True if the given element is only an object,
+     *                       false otherwise.
+     */
     isOnlyObject : function(obj) {
-      // TODO: DOC
       return JSUtils.isObject(obj) && !JSUtils.isArray(obj);
     },
 
+    /**
+     * Checks if the given element is boolean.
+     * @memberOf JSUtils.Main
+     * @param  {Any}     bool Element to be checked.
+     * @return {Boolean}      True if the given element is a boolean value,
+     *                        false otherwise.
+     */
     isBoolean : function(bool) {
-      // TODO: DOC
       return bool === true || bool === false;
     },
 
@@ -268,6 +279,14 @@ JSUtils.storeConstant = function() {
   //TODO: implement
 };
 
+// ============================ REGULAR EXPRESSIONS ===========================
+
+/* global JSUtils:true */
+
+JSUtils.emailRegExp = function(email) {
+  // TODO: Doc and test
+  return (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+};
 // ================================== STRINGS =================================
 
 /* global JSUtils:true */
