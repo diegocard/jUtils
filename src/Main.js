@@ -158,8 +158,14 @@
       return bool === true || bool === false;
     },
 
+    /**
+     * Checks if the given element is a string.
+     * @memberOf JSUtils.Main
+     * @param  {Any}     str Element to be checked.
+     * @return {Boolean}     True if the given element is a string,
+     *                       false otherwise.
+     */
     isString : function(str) {
-      // TODO: Tests and doc
       return Object.prototype.toString.call(str) === "[object String]";
     },
 

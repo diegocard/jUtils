@@ -176,10 +176,22 @@ test("isBoolean", function() {
   }
 });
 
-
-/* ================================= COMMON ================================ */
-
-
+/**
+ * JSUtils.isString tests.
+ * @memberOf Tests
+ */
+test("isString", function() {
+  var invalidTests = [{}, {a: 1}, NaN, 1, -1, 0, true, false, undefined, [], [1,2,3], function() { return 1; }],
+      i, len;
+  ok(JSUtils.isString(""), "isString: empty string");
+  ok(JSUtils.isString('test1'), "isString: single quotes");
+  ok(JSUtils.isString("test2"), "isString: double quotes");
+  ok(JSUtils.isString(new String("asd")), "isString: String constructor");
+  ok(JSUtils.isString(new String()), "isString: Empty string constructor");
+  for (i=0, len=invalidTests.length; i<len; i++) {
+    ok(!JSUtils.isString(invalidTests[i]));
+  }
+});
 
 /* ================================ STRINGS ================================ */
 

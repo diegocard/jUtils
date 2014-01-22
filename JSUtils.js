@@ -1,4 +1,4 @@
-/*! JSUtils 2014-01-20 */
+/*! JSUtils 2014-01-22 */
 // =================================== MAIN ===================================
 
 /**
@@ -159,8 +159,14 @@
       return bool === true || bool === false;
     },
 
+    /**
+     * Checks if the given element is a string.
+     * @memberOf JSUtils.Main
+     * @param  {Any}     str Element to be checked.
+     * @return {Boolean}     True if the given element is a string,
+     *                       false otherwise.
+     */
     isString : function(str) {
-      // TODO: Tests and doc
       return Object.prototype.toString.call(str) === "[object String]";
     },
 
@@ -183,40 +189,6 @@
   global.JSUtils = JSUtils;
   
 }(this));
-// ================================== COMMON ==================================
-
-/* global JSUtils:true */
-
-JSUtils.shallowCopy = function(obj) {
-  // TODO: TEST, DOC
-  var copy, prop;
-  if (!JSUtils.isObject(obj)) return obj;
-  copy = obj.constructor();
-  for (prop in obj) {
-    if (obj.hasOwnProperty(prop)) copy[prop] = obj[prop];
-  }
-  return copy;
-};
-
-JSUtils.deepCopy = function(obj) {
-  // TODO: TEST, DOC
-  var out, i, len, prop;
-  if (JSUtils.isArray(obj)) {
-    out = [];
-    for (i=0, len = obj.length; i<len; i+=1) {
-      out[i] = JSUtils.deepCopy(obj[i]);
-    }
-    return out;
-  }
-  if (JSUtils.isObject(obj)) {
-    out = {};
-    for (prop in obj) {
-      out[prop] = JSUtils.deepCopy(obj[prop]);
-    }
-    return out;
-  }
-  return obj;
-};
 // ================================== ARRAYS ==================================
 
 /* global JSUtils:true */
