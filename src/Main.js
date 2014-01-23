@@ -169,18 +169,36 @@
       return Object.prototype.toString.call(str) === "[object String]";
     },
 
+    /**
+     * Checks if the given element is a function.
+     * @memberOf JSUtils.Main
+     * @param  {Any}     fun Element to be checked.
+     * @return {Boolean}     True if the given element is a function,
+     *                       false otherwise.
+     */
     isFunction : function(fun) {
-      // TODO: Tests and doc
       return Object.prototype.toString.call(fun) === "[object Function]";
     },
 
+    /**
+     * Checks if the given element is undefined.
+     * @memberOf JSUtils.Main
+     * @param  {Any}     obj Element to be checked.
+     * @return {Boolean}     True if the given element is undefined,
+     *                       false otherwise.
+     */
     isUndefined : function(obj) {
-      // TODO: Tests and doc
       return typeof obj === "undefined";
     },
 
-    isNumber : function(num){
-      // TODO: Tests and doc
+    /**
+     * Checks if the given element is a number.
+     * @memberOf JSUtils.Main
+     * @param  {Any}     num Element to be checked.
+     * @return {Boolean}     True if the given element is a number,
+     *                       false otherwise.
+     */
+    isNumeric : function(num){
       return !isNaN(parseFloat(num)) && isFinite(num);
     },
   };

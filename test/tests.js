@@ -193,6 +193,58 @@ test("isString", function() {
   }
 });
 
+/**
+ * JSUtils.isFunction tests.
+ * @memberOf Tests
+ */
+test("isFunction", function() {
+  var invalidTests = [{}, {a: 1}, NaN, 1, -1, 0, true, false, undefined, [], [1,2,3], "str"],
+      func = function func(a) {
+        return a+1;
+      },
+      i, len;
+  ok(JSUtils.isFunction(function(a, b){return a + b;}), "isFunction: anonymous function");
+  ok(JSUtils.isFunction(func), "isFunction: names function");
+  ok(JSUtils.isFunction(new Function()), "isFunction: Empty function constructor");
+  ok(JSUtils.isFunction(new Function("x", "y", "return x+y;")), "isFunction: Empty function constructor");
+  for (i=0, len=invalidTests.length; i<len; i++) {
+    ok(!JSUtils.isFunction(invalidTests[i]));
+  }
+});
+
+/**
+ * JSUtils.isUndefined tests.
+ * @memberOf Tests
+ */
+test("isUndefined", function() {
+  var invalidTests = [{}, {a: 1}, NaN, 1, -1, 0, true, false, [], [1,2,3], "str", function() { return 1; }],
+      undef, i, len;
+  ok(JSUtils.isUndefined(undef), "isUndefined: Uninitialized variable");
+  ok(JSUtils.isUndefined(undefined), "isUndefined: Undefined pseudo-reserved word");
+  for (i=0, len=invalidTests.length; i<len; i++) {
+    ok(!JSUtils.isUndefined(invalidTests[i]));
+  }
+});
+
+/**
+ * JSUtils.isNumeric tests.
+ * @memberOf Tests
+ */
+test("isNumeric", function() {
+  var invalidTests = [{}, {a: 1}, NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY , undefined, true, false, [], [1,2,3], "str", function() { return 1; }],
+      i, len;
+  ok(JSUtils.isNumeric(-25), "isNumeric: Negative integer number");
+  ok(JSUtils.isNumeric(4), "isNumeric: Positive integer number");
+  ok(JSUtils.isNumeric(0), "isNumeric: Zero");
+  ok(JSUtils.isNumeric(-10.15), "isNumeric: Negative float number");
+  ok(JSUtils.isNumeric(1.15), "isNumeric: Positive float number");
+  ok(JSUtils.isNumeric(Number.MAX_VALUE), "isNumeric: Max number");
+  ok(JSUtils.isNumeric(Number.MIN_VALUE), "isNumeric: Min number");
+  for (i=0, len=invalidTests.length; i<len; i++) {
+    ok(!JSUtils.isNumeric(invalidTests[i]));
+  }
+});
+
 /* ================================ STRINGS ================================ */
 
 /**
