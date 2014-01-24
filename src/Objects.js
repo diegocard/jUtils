@@ -2,8 +2,13 @@
 
 /* global JSUtils:true */
 
+/**
+ * Counts the amount of properties in an object (keys).
+ * Not that this method only counts own properties.
+ * @param  {Object} obj The givne object.
+ * @return {Int}        Amount of properties.
+ */
 JSUtils.propertyCount = function(obj) {
-  // TODO: Tests and doc
   if (obj !== Object(obj)) {
     throw new TypeError('Invalid object');
   } else {
