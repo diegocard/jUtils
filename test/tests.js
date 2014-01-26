@@ -289,3 +289,18 @@ test("firstIndex", function() {
   ok(firstIndex(array1, cond1) === 1, "firstIndex: Numeric array");
   ok(firstIndex(array2, cond2) === 2, "firstIndex: String array");
 });
+
+/* ================================ OBJECTS ================================ */
+
+/**
+ * JSUtils.propertyCount tests.
+ * @memberOf Tests
+ */
+test("propertyCount", function() {
+  var propertyCount = JSUtils.propertyCount;
+  ok(propertyCount({}) === 0, "propertyCount: Empty array");
+  ok(propertyCount({a: 1}) === 1, "firstIndex: One property");
+  throws(propertyCount(), TypeError, "firstIndex: Not an object");
+  throws(propertyCount(1), TypeError, "firstIndex: Not an object");
+  throws(propertyCount("str"), TypeError, "firstIndex: Not an object");
+});
