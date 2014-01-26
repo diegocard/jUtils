@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 
   var header = '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-      allSources = ['src/Main.js', 'src/Arrays.js', 'src/Functions.js', 'src/Object.js', 'src/Patterns.js', 'src/RegExp.js', 'src/Strings.js'];
+      allSources = ['src/Main.js', 'src/Arrays.js', 'src/Functions.js', 'src/Object.js', 'src/RegExp.js', 'src/Strings.js'];
 
   // Project configuration.
   grunt.initConfig({
