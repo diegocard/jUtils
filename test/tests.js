@@ -299,8 +299,14 @@ test("firstIndex", function() {
 test("propertyCount", function() {
   var propertyCount = JSUtils.propertyCount;
   ok(propertyCount({}) === 0, "propertyCount: Empty array");
-  ok(propertyCount({a: 1}) === 1, "firstIndex: One property");
-  throws(propertyCount(), TypeError, "firstIndex: Not an object");
-  throws(propertyCount(1), TypeError, "firstIndex: Not an object");
-  throws(propertyCount("str"), TypeError, "firstIndex: Not an object");
+  ok(propertyCount({a: 1}) === 1, "propertyCount: One property");
+  throws(function() {
+    propertyCount();
+  }, TypeError, "propertyCount: No arguments");
+  throws(function() {
+    propertyCount(1);
+  }, TypeError, "propertyCount: Numeric argument");
+  throws(function() {
+    propertyCount("str");
+  }, TypeError, "propertyCount: String argument");
 });
