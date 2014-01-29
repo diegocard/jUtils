@@ -3,7 +3,7 @@
 /* global JSUtils:true */
 
 /**
- * Sets the precision for a given number.
+ * Rounds the number to the given precision (amount of decimal digits).
  * @memberOf JSUtils.Misc
  * @param {Numeric} number    The given number.
  * @param {Numeric} precision The given precision.
