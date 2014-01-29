@@ -10,7 +10,7 @@
  */
 JSUtils.propertyCount = function(obj) {
   if (obj !== Object(obj)) {
-    throw new TypeError('Invalid object');
+    throw new TypeError("Invalid object");
   } else {
     return JSUtils.getKeys(obj).length;
   }

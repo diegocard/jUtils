@@ -1,4 +1,4 @@
-/*! JSUtils 2014-01-25 */
+/*! JSUtils 2014-01-29 */
 // =================================== MAIN ===================================
 
 /**
@@ -280,7 +280,7 @@ JSUtils.storeConstant = function() {
  */
 JSUtils.propertyCount = function(obj) {
   if (obj !== Object(obj)) {
-    throw new TypeError('Invalid object');
+    throw new TypeError("Invalid object");
   } else {
     return JSUtils.getKeys(obj).length;
   }
@@ -389,5 +389,28 @@ JSUtils.translate = function(str, lang, translation) {
     }
   } else {
     throw new TypeError('You must provide at least a string and language');
+  }
+};
+
+// =============================== MISCELANEOUS ===============================
+
+/* global JSUtils:true */
+
+/**
+ * Sets the precision for a given number.
+ * @memberOf JSUtils.Misc
+ * @param {Numeric} number    The given number.
+ * @param {Numeric} precision The given precision.
+ * @return {Numeric}          The new number with adjusted precision.
+ */
+JSUtils.setPrecision = function(number, precision) {
+  // TODO: TEST
+  var isNumeric = JSUtils.isNumeric,
+      prec;
+  if (isNumeric(number) && isNumeric(precision)) {
+    prec = Math.pow(10, precision);
+    return Math.round(number*prec) / prec;
+  } else {
+    throw new TypeError("You must specify a numeric number and precision");
   }
 };
