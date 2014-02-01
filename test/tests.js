@@ -310,3 +310,23 @@ test("propertyCount", function() {
     propertyCount("str");
   }, TypeError, "propertyCount: String argument");
 });
+
+// =============================== MISCELANEOUS ===============================
+
+/**
+ * JSUtils.setPrecision tests.
+ * @memberOf Tests
+ */
+test("setPrecision", function() {
+  ok(JSUtils.setPrecision(1.16, 1) === 1.2, "setPrecision: Truncate 1 digit and round correctly");
+  ok(JSUtils.setPrecision(-1.16, 1) === -1.2, "setPrecision: Negative numbers");
+  ok(JSUtils.setPrecision(3.45, 2) === 3.45, "setPrecision: Exact amount of digits");
+  ok(JSUtils.setPrecision(4.1, 3) === 4.1, "setPrecision: Extra digits");
+  ok(JSUtils.setPrecision(123.4567, 3) === 123.457, "setPrecision: Bigger number with more digits");
+  throws(function() {
+    JSUtils.setPrecision({}, 2);
+  }, TypeError, "Invalid first parameter");
+  throws(function() {
+    JSUtils.setPrecision(3, NaN);
+  }, TypeError, "Invalid second parameter");
+});

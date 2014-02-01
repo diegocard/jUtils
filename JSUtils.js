@@ -1,4 +1,4 @@
-/*! JSUtils 2014-01-29 */
+/*! JSUtils 2014-02-01 */
 // =================================== MAIN ===================================
 
 /**
@@ -404,7 +404,6 @@ JSUtils.translate = function(str, lang, translation) {
  * @return {Numeric}          The new number with adjusted precision.
  */
 JSUtils.setPrecision = function(number, precision) {
-  // TODO: TEST
   var isNumeric = JSUtils.isNumeric,
       prec;
   if (isNumeric(number) && isNumeric(precision)) {

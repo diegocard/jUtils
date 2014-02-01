@@ -10,7 +10,6 @@
  * @return {Numeric}          The new number with adjusted precision.
  */
 JSUtils.setPrecision = function(number, precision) {
-  // TODO: TEST
   var isNumeric = JSUtils.isNumeric,
       prec;
   if (isNumeric(number) && isNumeric(precision)) {
