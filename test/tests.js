@@ -141,10 +141,10 @@ test("isObject", function() {
 });
 
 /**
- * JSUtils.isOnlyObject tests.
+ * JSUtils.isStrictlyObject tests.
  * @memberOf Tests
  */
-test("isOnlyObject", function() {
+test("isStrictlyObject", function() {
   var test1 = {},
       test2 = {a: 1, b: {c: 2}},
       test3 = {a: 1, b: function() {
@@ -152,13 +152,13 @@ test("isOnlyObject", function() {
       }},
       invalidTests = [NaN, 1, "str", undefined, [], [1,2,3], function() { return 1; }],
       i, len;
-  ok(JSUtils.isOnlyObject(test1), "isOnlyObject: empty object");
-  ok(JSUtils.isOnlyObject(test2), "isOnlyObject: nested objects");
-  ok(JSUtils.isOnlyObject(test3), "isOnlyObject: includes a function");
-  ok(JSUtils.isOnlyObject(test3), "isOnlyObject: empty array");
-  ok(JSUtils.isOnlyObject(test3), "isOnlyObject: array with elements");
+  ok(JSUtils.isStrictlyObject(test1), "isStrictlyObject: empty object");
+  ok(JSUtils.isStrictlyObject(test2), "isStrictlyObject: nested objects");
+  ok(JSUtils.isStrictlyObject(test3), "isStrictlyObject: includes a function");
+  ok(JSUtils.isStrictlyObject(test3), "isStrictlyObject: empty array");
+  ok(JSUtils.isStrictlyObject(test3), "isStrictlyObject: array with elements");
   for (i=0, len=invalidTests.length; i<len; i++) {
-    ok(!JSUtils.isOnlyObject(invalidTests[i]));
+    ok(!JSUtils.isStrictlyObject(invalidTests[i]));
   }
 });
 
@@ -169,8 +169,8 @@ test("isOnlyObject", function() {
 test("isBoolean", function() {
   var invalidTests = [{}, {a: 1}, NaN, 1, -1, 0, "str", undefined, [], [1,2,3], function() { return 1; }],
       i, len;
-  ok(JSUtils.isBoolean(true), "isOnlyObject: true");
-  ok(JSUtils.isBoolean(false), "isOnlyObject: false");
+  ok(JSUtils.isBoolean(true), "isStrictlyObject: true");
+  ok(JSUtils.isBoolean(false), "isStrictlyObject: false");
   for (i=0, len=invalidTests.length; i<len; i++) {
     ok(!JSUtils.isBoolean(invalidTests[i]));
   }

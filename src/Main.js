@@ -143,7 +143,7 @@
      * @return {Boolean}     True if the given element is only an object,
      *                       false otherwise.
      */
-    isOnlyObject : function(obj) {
+    isStrictlyObject : function(obj) {
       return JSUtils.isObject(obj) && !JSUtils.isArray(obj);
     },
 
