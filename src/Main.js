@@ -102,7 +102,7 @@
      */
     forEach : function(obj, func, context) {
       var i, len, keys;
-      if (JSUtils.isObject(obj)) {
+      if (JSUtils.isStrictlyObject(obj)) {
         keys = JSUtils.getKeys(obj);
         for (i=0, len=keys.length; i<len; i+=1) {
           func.call(context, obj[keys[i]], keys[i], obj);

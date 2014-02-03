@@ -21,7 +21,7 @@ JSUtils.firstIndex = function(array, func) {
 };
 
 JSUtils.replace = function(array, element, condition) {
-  //TODO: Issue with JSUtils.replace([1,2,3], 2, function(elem, index){return index === 2});
+  // TODO: Doc, test
   JSUtils.forEach(array, function(value, index, object) {
     if (!condition || condition(value, index, object)) {
       array[index] = element;

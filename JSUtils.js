@@ -103,7 +103,7 @@
      */
     forEach : function(obj, func, context) {
       var i, len, keys;
-      if (JSUtils.isObject(obj)) {
+      if (JSUtils.isStrictlyObject(obj)) {
         keys = JSUtils.getKeys(obj);
         for (i=0, len=keys.length; i<len; i+=1) {
           func.call(context, obj[keys[i]], keys[i], obj);
@@ -230,7 +230,7 @@ JSUtils.firstIndex = function(array, func) {
 };
 
 JSUtils.replace = function(array, element, condition) {
-  //TODO: Issue with JSUtils.replace([1,2,3], 2, function(elem, index){return index === 2});
+  // TODO: Doc, test
   JSUtils.forEach(array, function(value, index, object) {
     if (!condition || condition(value, index, object)) {
       array[index] = element;
