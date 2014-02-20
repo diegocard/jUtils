@@ -4,8 +4,8 @@
 
 JSUtils.getJSON = function(url, success, error) {
   // TODO: Doc, test, add extra parameters
-  var request, data;
-  request = new XMLHttpRequest();
+  var request = new XMLHttpRequest(),
+      data;
   request.open('GET', url, true);
 
   request.onload = function() {
@@ -25,3 +25,12 @@ JSUtils.getJSON = function(url, success, error) {
 
   request.send();
 };
+
+JSUtils.ajaxPost = function(url, data) {
+  // TODO: Doc, test, add extra parameters, check if success and error functions can be added as parameters
+  var request = new XMLHttpRequest();
+  request.open('POST', url, true);
+  request.send(data);
+};
+
+// TODO: Combine getJSON, ajaxPost and ajaxGet into a single ajax function?
