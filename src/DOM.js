@@ -42,6 +42,32 @@ JSUtils.ajaxPost = function(url, data) {
   return JSUtils;
 };
 
+/*
+ * RESTRICTION: IE9+
+ */
+JSUtils.ajaxGet = function(url, success, error) {
+  // TODO: Doc, test, review
+  var request = new XMLHttpRequest(),
+      resp;
+  request.open('GET', url, true);
+
+  request.onload = function() {
+    if (request.status >= 200 && request.status < 400){
+      resp = request.responseText;
+      success(resp);
+    } else {
+      // We reached our target server, but it returned an error
+      error();
+    }
+  };
+
+  request.onerror = function() {
+    error();
+  };
+
+  request.send();
+};
+
 
 // TODO: Check if method chaining works, add to other methods
 // TODO: Combine getJSON, ajaxPost and ajaxGet into a single ajax function?
