@@ -3,7 +3,7 @@
 /* global JSUtils:true, XMLHttpRequest:false */
 
 /*
- * RESTRICTION: IE9+
+ * RESTRICTION: IE8+
  */
 JSUtils.getJSON = function(url, success, error) {
   // TODO: Doc, test, add extra parameters
@@ -11,22 +11,19 @@ JSUtils.getJSON = function(url, success, error) {
       data;
   request.open('GET', url, true);
 
-  request.onload = function() {
-    if (request.status >= 200 && request.status < 400){
-      // Success
-      data = JSON.parse(request.responseText);
-      success(data);
-    } else {
-      // We reached our target server, but it returned an error
-      error();
+  request.onreadystatechange = function() {
+    if (this.readyState === 4){
+      if (this.status >= 200 && this.status < 400){
+        data = JSON.parse(this.responseText);
+        success(data);
+      } else {
+        error();
+      }
     }
   };
 
-  request.onerror = function() {
-    error();
-  };
-
   request.send();
+  request = null;
   return JSUtils;
 };
 
@@ -46,26 +43,24 @@ JSUtils.ajaxPost = function(url, data) {
  * RESTRICTION: IE9+
  */
 JSUtils.ajaxGet = function(url, success, error) {
-  // TODO: Doc, test, review
+  // TODO: Doc, test
   var request = new XMLHttpRequest(),
       resp;
   request.open('GET', url, true);
 
-  request.onload = function() {
-    if (request.status >= 200 && request.status < 400){
-      resp = request.responseText;
-      success(resp);
-    } else {
-      // We reached our target server, but it returned an error
-      error();
+  request.onreadystatechange = function() {
+    if (this.readyState === 4){
+      if (this.status >= 200 && this.status < 400){
+        resp = this.responseText;
+        success(resp);
+      } else {
+        error();
+      }
     }
   };
 
-  request.onerror = function() {
-    error();
-  };
-
   request.send();
+  request = null;
 };
 
 
