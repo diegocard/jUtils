@@ -1,4 +1,4 @@
-/*! JSUtils 2014-02-22 */
+/*! JSUtils 2014-02-23 */
 // =================================== MAIN ===================================
 
 /**
@@ -207,6 +207,74 @@
   global.JSUtils = JSUtils;
   
 }(this));
+// =================================== AJAX ===================================
+
+/* global JSUtils:true, XMLHttpRequest:false */
+
+/*
+ * RESTRICTION: IE8+
+ */
+JSUtils.getJSON = function(url, success, error) {
+  // TODO: Doc, test, add extra parameters
+  var request = new XMLHttpRequest(),
+      data;
+  request.open('GET', url, true);
+
+  request.onreadystatechange = function() {
+    if (this.readyState === 4){
+      if (this.status >= 200 && this.status < 400){
+        data = JSON.parse(this.responseText);
+        success(data);
+      } else {
+        error();
+      }
+    }
+  };
+
+  request.send();
+  request = null;
+  return JSUtils;
+};
+
+
+/*
+ * RESTRICTION: IE8+
+ */
+JSUtils.ajaxPost = function(url, data) {
+  // TODO: Doc, test, add extra parameters, check if success and error functions can be added as parameters
+  var request = new XMLHttpRequest();
+  request.open('POST', url, true);
+  request.send(data);
+  return JSUtils;
+};
+
+/*
+ * RESTRICTION: IE9+
+ */
+JSUtils.ajaxGet = function(url, success, error) {
+  // TODO: Doc, test
+  var request = new XMLHttpRequest(),
+      resp;
+  request.open('GET', url, true);
+
+  request.onreadystatechange = function() {
+    if (this.readyState === 4){
+      if (this.status >= 200 && this.status < 400){
+        resp = this.responseText;
+        success(resp);
+      } else {
+        error();
+      }
+    }
+  };
+
+  request.send();
+  request = null;
+};
+
+// TODO: Check if method chaining works, add to other methods
+// TODO: Combine getJSON, ajaxPost and ajaxGet into a single ajax function?
+
 // ================================== ARRAYS ==================================
 
 /* global JSUtils:true */
@@ -261,12 +329,57 @@ JSUtils.slugify = function(str) {
 };
 
 
+// ============================= DOM MANIPULATION =============================
+
+/* global JSUtils:true, document:false */
+
+JSUtils.findInDOM = function(selector) {
+  // TODO: Doc, test
+  if (!JSUtils.isString(selector)) {
+    throw new TypeError("The given selector must be a string");
+  } else {
+    return document.querySelectorAll(selector);
+  }
+};
+
+JSUtils.addClass = function(element, className) {
+  // TODO: Doc, test, add type check
+  if (element.classList) {
+    element.classList.add(className);
+  }else {
+    element.className += " " + className;
+  }
+  return element;
+};
+
+//TODO: Add isHtmlNode, isTextNode
 // ================================= FUNCTIONS ================================
 
 /* global JSUtils:true */
 
 JSUtils.storeConstant = function() {
   //TODO: implement
+};
+// =============================== MISCELANEOUS ===============================
+
+/* global JSUtils:true */
+
+/**
+ * Rounds the number to the given precision (amount of decimal digits).
+ * @memberOf JSUtils.Misc
+ * @param {Numeric} number    The given number.
+ * @param {Numeric} precision The given precision.
+ * @return {Numeric}          The new number with adjusted precision.
+ */
+JSUtils.setPrecision = function(number, precision) {
+  var isNumeric = JSUtils.isNumeric,
+      prec;
+  if (isNumeric(number) && isNumeric(precision)) {
+    prec = Math.pow(10, precision);
+    return Math.round(number*prec) / prec;
+  } else {
+    throw new TypeError("You must specify a numeric number and precision");
+  }
 };
 // ================================= OBJECTS =================================
 
@@ -389,27 +502,5 @@ JSUtils.translate = function(str, lang, translation) {
     }
   } else {
     throw new TypeError('You must provide at least a string and language');
-  }
-};
-
-// =============================== MISCELANEOUS ===============================
-
-/* global JSUtils:true */
-
-/**
- * Rounds the number to the given precision (amount of decimal digits).
- * @memberOf JSUtils.Misc
- * @param {Numeric} number    The given number.
- * @param {Numeric} precision The given precision.
- * @return {Numeric}          The new number with adjusted precision.
- */
-JSUtils.setPrecision = function(number, precision) {
-  var isNumeric = JSUtils.isNumeric,
-      prec;
-  if (isNumeric(number) && isNumeric(precision)) {
-    prec = Math.pow(10, precision);
-    return Math.round(number*prec) / prec;
-  } else {
-    throw new TypeError("You must specify a numeric number and precision");
   }
 };
