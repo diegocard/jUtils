@@ -349,7 +349,14 @@ JSUtils.slugify = function(str) {
  */
 JSUtils.find = function(selector) {
   // TODO: Doc, test
-  return document.querySelectorAll(selector);
+  var selection = document.querySelectorAll(selector);
+  if (!selection || !selection.length) {
+    return null;
+  } else if (selection.length === 1) {
+    return selection[0];
+  } else {
+    return selection;
+  }
 };
 
 /**
@@ -384,6 +391,7 @@ JSUtils.appendChild = function(parent, element) {
   return element;
 };
 
+//TODO: Wrap results and give partial application to allow method chaining
 //TODO: Add isHtmlNode, isTextNode
 // ================================= FUNCTIONS ================================
 
