@@ -5,20 +5,16 @@
 /**
  * IE 8+
  */
-JSUtils.findInDOM = function(selector) {
+JSUtils.find = function(selector) {
   // TODO: Doc, test
-  if (!JSUtils.isString(selector)) {
-    throw new TypeError("The given selector must be a string");
-  } else {
-    return document.querySelectorAll(selector);
-  }
+  return document.querySelectorAll(selector);
 };
 
 /**
  * IE 8+
  */
-JSUtils.addClassDOM = function(element, className) {
-  // TODO: Doc, test, add type check
+JSUtils.addClass = function(element, className) {
+  // TODO: Doc, test
   if (element.classList) {
     element.classList.add(className);
   }else {
@@ -30,10 +26,19 @@ JSUtils.addClassDOM = function(element, className) {
 /**
  * IE 8+
  */
-JSUtils.afterDOM = function(element, htmlString) {
-  // TODO: Doc, test, add type check
+JSUtils.after = function(element, htmlString) {
+  // TODO: Doc, test
   // TODO: If htmlString is a DOM element, convert it to string
   element.insertAdjacentHTML('afterend', htmlString);
+  return element;
+};
+
+/**
+ * IE 8+
+ */
+JSUtils.appendChild = function(parent, element) {
+  // TODO: Doc, test
+  parent.appendChild(element);
   return element;
 };
 

@@ -201,6 +201,17 @@
     isNumeric : function(num){
       return !isNaN(parseFloat(num)) && isFinite(num);
     },
+    
+    /**
+     * Checks if the given element is a DOM Element.
+     * @memberOf JSUtils.Main
+     * @param  {Any}     element Element to be checked.
+     * @return {Boolean}         True if the given element is a DOM element,
+     *                           false otherwise.
+     */
+    isDOMElement : function(element){
+      return element && element.nodeName;
+    },
   };
   
   global.JSUtils = JSUtils;
