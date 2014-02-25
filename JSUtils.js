@@ -1,6 +1,8 @@
 /*! JSUtils 2014-02-25 */
 // =================================== MAIN ===================================
 
+/* global HTMLElement:false */
+
 /**
  * JSUtils main object
  * @module JSUtils
@@ -204,14 +206,14 @@
     },
     
     /**
-     * Checks if the given element is a DOM Element.
+     * Checks if the given element is an HTML element.
      * @memberOf JSUtils.Main
      * @param  {Any}     element Element to be checked.
-     * @return {Boolean}         True if the given element is a DOM element,
+     * @return {Boolean}         True if the given element is an HTML element,
      *                           false otherwise.
      */
-    isDOMElement : function(element){
-      return element && element.nodeName;
+    isHtmlElement : function(element){
+      return element instanceof HTMLElement;
     },
   };
   
