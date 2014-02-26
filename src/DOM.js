@@ -43,9 +43,18 @@ JSUtils.after = function(element, htmlString) {
 /**
  * IE 8+
  */
-JSUtils.appendChild = function(parent, element) {
+JSUtils.append = function(parent, element) {
   // TODO: Doc, test
   parent.appendChild(element);
+  return element;
+};
+
+/**
+ * IE 8+
+ */
+JSUtils.before = function(element, htmlString) {
+  // TODO: Doc, test
+  element.insertAdjacentHTML('beforebegin', htmlString);
   return element;
 };
 
