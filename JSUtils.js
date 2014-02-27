@@ -1,4 +1,4 @@
-/*! JSUtils 2014-02-26 */
+/*! JSUtils 2014-02-27 */
 // =================================== MAIN ===================================
 
 /* global HTMLElement:false */
@@ -400,6 +400,18 @@ JSUtils.before = function(element, htmlString) {
   // TODO: Doc, test
   element.insertAdjacentHTML('beforebegin', htmlString);
   return element;
+};
+
+/**
+ * IE 8+
+ */
+JSUtils.children = function(element) {
+  // TODO: Doc, test
+  if (element) {
+    return element.children;
+  } else {
+    return null;
+  }
 };
 
 //TODO: Wrap results and give partial application to allow method chaining
