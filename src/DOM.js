@@ -70,5 +70,16 @@ JSUtils.children = function(element) {
   }
 };
 
+/**
+ * IE 9+
+ */
+JSUtils.clone = function(element) {
+  if (element) {
+    return el.cloneNode(true);
+  } else {
+    throw new TypeError("You must provide a suitable DOM element for cloning");
+  }
+};
+
 //TODO: Wrap results and give partial application to allow method chaining
 //TODO: Add isHtmlNode, isTextNode

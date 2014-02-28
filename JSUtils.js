@@ -1,4 +1,4 @@
-/*! JSUtils 2014-02-27 */
+/*! JSUtils 2014-02-28 */
 // =================================== MAIN ===================================
 
 /* global HTMLElement:false */
@@ -411,6 +411,17 @@ JSUtils.children = function(element) {
     return element.children;
   } else {
     return null;
+  }
+};
+
+/**
+ * IE 9+
+ */
+JSUtils.clone = function(element) {
+  if (element) {
+    return el.cloneNode(true);
+  } else {
+    throw new TypeError("You must provide a suitable DOM element for cloning");
   }
 };
 
