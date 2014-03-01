@@ -1,4 +1,4 @@
-/*! JSUtils 2014-02-28 */
+/*! JSUtils 2014-03-01 */
 // =================================== MAIN ===================================
 
 /* global HTMLElement:false */
@@ -419,7 +419,7 @@ JSUtils.children = function(element) {
  */
 JSUtils.clone = function(element) {
   if (element) {
-    return el.cloneNode(true);
+    return element.cloneNode(true);
   } else {
     throw new TypeError("You must provide a suitable DOM element for cloning");
   }
