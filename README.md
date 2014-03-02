@@ -7,7 +7,6 @@ Components:
 -----------
 - Arrays
 - Common utilities
-- DOM
 - Functions
 - Objects
 - Strings
@@ -19,4 +18,3 @@ Thanks to:
 - String hash code: http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
 - Slugify base: http://dense13.com/blog/2009/05/03/converting-string-to-slug-javascript/
 - Email regexp: http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-- DOM manipulation: http://youmightnotneedjquery.com/
