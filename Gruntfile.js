@@ -7,7 +7,6 @@ module.exports = function(grunt) {
         'src/Main.js', 
         'src/Ajax.js', 
         'src/Arrays.js', 
-        'src/DOM.js', 
         'src/Functions.js', 
         'src/Misc.js',
         'src/Objects.js', 
