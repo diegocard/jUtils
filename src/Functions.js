@@ -1,7 +1,7 @@
 // ================================= FUNCTIONS ================================
 
-/* global JSUtils:true */
+/* global jUtils:true */
 
-JSUtils.storeConstant = function() {
+jUtils.storeConstant = function() {
   //TODO: implement
 };

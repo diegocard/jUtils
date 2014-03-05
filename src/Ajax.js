@@ -1,11 +1,11 @@
 // =================================== AJAX ===================================
 
-/* global JSUtils:true, XMLHttpRequest:false */
+/* global jUtils:true, XMLHttpRequest:false */
 
 /*
  * RESTRICTION: IE8+
  */
-JSUtils.getJSON = function(url, success, error) {
+jUtils.getJSON = function(url, success, error) {
   // TODO: Doc, test, add extra parameters
   var request = new XMLHttpRequest(),
       data;
@@ -24,25 +24,25 @@ JSUtils.getJSON = function(url, success, error) {
 
   request.send();
   request = null;
-  return JSUtils;
+  return jUtils;
 };
 
 
 /*
  * RESTRICTION: IE8+
  */
-JSUtils.ajaxPost = function(url, data) {
+jUtils.ajaxPost = function(url, data) {
   // TODO: Doc, test, add extra parameters, check if success and error functions can be added as parameters
   var request = new XMLHttpRequest();
   request.open('POST', url, true);
   request.send(data);
-  return JSUtils;
+  return jUtils;
 };
 
 /*
  * RESTRICTION: IE9+
  */
-JSUtils.ajaxGet = function(url, success, error) {
+jUtils.ajaxGet = function(url, success, error) {
   // TODO: Doc, test
   var request = new XMLHttpRequest(),
       resp;

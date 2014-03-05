@@ -1,31 +1,31 @@
-/*! JSUtils 2014-03-02 */
+/*! jUtils 2014-03-05 */
 // =================================== MAIN ===================================
 
 /* global HTMLElement:false */
 
 /**
- * JSUtils main object
- * @module JSUtils
+ * jUtils main object
+ * @module jUtils
  */
 (function (global) {
   "use strict";
 
-  var JSUtils = global.JSUtils,
+  var jUtils = global.jUtils,
       // Private variables
       internal = {
         global: global,
       };
 
-  // Check that JSUtils is not already defined.
-  if (global.JSUtils) {
+  // Check that jUtils is not already defined.
+  if (global.jUtils) {
     return;
   }
 
-  JSUtils = {
+  jUtils = {
 
     /**
      * Returns the global object.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @return {Object} The global object.
      */
     getGlobal : function() {
@@ -34,7 +34,7 @@
 
     /**
      * Checks if the given object is equal to the global object.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any} elem A given element.
      * @return {Boolean}  True if the given element is equal to the global object,
      *                    false otherwise.
@@ -44,7 +44,7 @@
     },
 
     /**
-     * Stores a private variable to JSUtils. 
+     * Stores a private variable to jUtils. 
      * If the variable was already defined, it will be overridden.
      * This variable can be used through the getVariable method.
      * @param  {String} name  The variable's name.
@@ -53,7 +53,7 @@
      *                        false otherwise.
      */
     storeVariable : function(name, value) {
-      if (JSUtils.isString(name)) {
+      if (jUtils.isString(name)) {
         internal[name] = value;
         return internal[name];
       } else {
@@ -62,13 +62,13 @@
     },
 
     /**
-     * Given its name, returns the value stored in a private variable of the JSUtils module.
+     * Given its name, returns the value stored in a private variable of the jUtils module.
      * Returns undefined if the variable was not defined previously.
      * @param  {String} name Internal variable name.
      * @return {Any}         Value stored in the private variable, if found.
      */
     getVariable : function(name) {
-      if (JSUtils.isString(name)) {
+      if (jUtils.isString(name)) {
         return internal[name];
       } else {
         throw new TypeError("You must specify a variable name");
@@ -78,14 +78,14 @@
     /**
      * Returns an array with the property names for the given object.
      * If obj is not an object, then an exception is thrown.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Object} obj The given object.
      * @return {Array}      Array of property names.
      */
     getKeys : function(obj) {
       var keys = [],
           key;
-      if (!JSUtils.isObject(obj)) {
+      if (!jUtils.isObject(obj)) {
         throw new TypeError("Invalid object");
       }
       for (key in obj) {
@@ -98,15 +98,15 @@
 
     /**
      * Concise and efficient forEach implementation.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Object} obj     Elements to be iterated.
      * @param  {Function} func  Function applied to the elements in obj.
      * @param  {Object} context Context for func.
      */
     forEach : function(obj, func, context) {
       var i, len, keys;
-      if (JSUtils.isStrictlyObject(obj)) {
-        keys = JSUtils.getKeys(obj);
+      if (jUtils.isStrictlyObject(obj)) {
+        keys = jUtils.getKeys(obj);
         for (i=0, len=keys.length; i<len; i+=1) {
           func.call(context, obj[keys[i]], keys[i], obj);
         }
@@ -119,7 +119,7 @@
 
     /**
      * Checks if the given element is an array.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     arr Element to be checked.
      * @return {Boolean}     True if the given element is an array,
      *                       false otherwise.
@@ -130,29 +130,29 @@
 
     /**
      * Checks if the given element is an object (includes arrays but not functions).
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     obj Element to be checked.
      * @return {Boolean}     True if the given element is an array,
      *                       false otherwise.
      */
     isObject : function(obj) {
-      return obj === Object(obj) && !JSUtils.isFunction(obj);
+      return obj === Object(obj) && !jUtils.isFunction(obj);
     },
 
     /**
      * Checks if the given element is an object (does not include arrays and functions).
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     obj Element to be checked.
      * @return {Boolean}     True if the given element is only an object,
      *                       false otherwise.
      */
     isStrictlyObject : function(obj) {
-      return JSUtils.isObject(obj) && !JSUtils.isArray(obj);
+      return jUtils.isObject(obj) && !jUtils.isArray(obj);
     },
 
     /**
      * Checks if the given element is boolean.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     bool Element to be checked.
      * @return {Boolean}      True if the given element is a boolean value,
      *                        false otherwise.
@@ -163,7 +163,7 @@
 
     /**
      * Checks if the given element is a string.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     str Element to be checked.
      * @return {Boolean}     True if the given element is a string,
      *                       false otherwise.
@@ -174,7 +174,7 @@
 
     /**
      * Checks if the given element is a function.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     fun Element to be checked.
      * @return {Boolean}     True if the given element is a function,
      *                       false otherwise.
@@ -185,7 +185,7 @@
 
     /**
      * Checks if the given element is undefined.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     obj Element to be checked.
      * @return {Boolean}     True if the given element is undefined,
      *                       false otherwise.
@@ -196,7 +196,7 @@
 
     /**
      * Checks if the given element is a number.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     num Element to be checked.
      * @return {Boolean}     True if the given element is a number,
      *                       false otherwise.
@@ -207,7 +207,7 @@
     
     /**
      * Checks if the given element is an HTML element.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     element Element to be checked.
      * @return {Boolean}         True if the given element is an HTML element,
      *                           false otherwise.
@@ -217,17 +217,17 @@
     },
   };
   
-  global.JSUtils = JSUtils;
+  global.jUtils = jUtils;
   
 }(this));
 // =================================== AJAX ===================================
 
-/* global JSUtils:true, XMLHttpRequest:false */
+/* global jUtils:true, XMLHttpRequest:false */
 
 /*
  * RESTRICTION: IE8+
  */
-JSUtils.getJSON = function(url, success, error) {
+jUtils.getJSON = function(url, success, error) {
   // TODO: Doc, test, add extra parameters
   var request = new XMLHttpRequest(),
       data;
@@ -246,25 +246,25 @@ JSUtils.getJSON = function(url, success, error) {
 
   request.send();
   request = null;
-  return JSUtils;
+  return jUtils;
 };
 
 
 /*
  * RESTRICTION: IE8+
  */
-JSUtils.ajaxPost = function(url, data) {
+jUtils.ajaxPost = function(url, data) {
   // TODO: Doc, test, add extra parameters, check if success and error functions can be added as parameters
   var request = new XMLHttpRequest();
   request.open('POST', url, true);
   request.send(data);
-  return JSUtils;
+  return jUtils;
 };
 
 /*
  * RESTRICTION: IE9+
  */
-JSUtils.ajaxGet = function(url, success, error) {
+jUtils.ajaxGet = function(url, success, error) {
   // TODO: Doc, test
   var request = new XMLHttpRequest(),
       resp;
@@ -290,18 +290,18 @@ JSUtils.ajaxGet = function(url, success, error) {
 
 // ================================== ARRAYS ==================================
 
-/* global JSUtils:true */
+/* global jUtils:true */
 
 /**
  * Returns the position of the first element in the array that fulfills
  * the given condition.
  * @method firstIndex
- * @memberOf JSUtils.Arrays
+ * @memberOf jUtils.Arrays
  * @param  {Array} array    Array of items.
  * @param  {Function} func  Condition (returns yes or no).
  * @return {Integer}        Array position is the element was found, -1 otherwise.
  */
-JSUtils.firstIndex = function(array, func) {
+jUtils.firstIndex = function(array, func) {
   for (var i=0, len=array.length; i<len; i+=1) {
     if (func(array[i])) {
       return i;
@@ -310,9 +310,9 @@ JSUtils.firstIndex = function(array, func) {
   return -1;
 };
 
-JSUtils.replace = function(array, element, condition) {
+jUtils.replace = function(array, element, condition) {
   // TODO: Doc, test
-  JSUtils.forEach(array, function(value, index, object) {
+  jUtils.forEach(array, function(value, index, object) {
     if (!condition || condition(value, index, object)) {
       array[index] = element;
     }
@@ -320,7 +320,7 @@ JSUtils.replace = function(array, element, condition) {
   return array;
 };
 
-JSUtils.slugify = function(str) {
+jUtils.slugify = function(str) {
   //TODO: Doc, test
   var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;",
       to   = "aaaaaeeeeeiiiiooooouuuunc------",
@@ -344,24 +344,24 @@ JSUtils.slugify = function(str) {
 
 // ================================= FUNCTIONS ================================
 
-/* global JSUtils:true */
+/* global jUtils:true */
 
-JSUtils.storeConstant = function() {
+jUtils.storeConstant = function() {
   //TODO: implement
 };
 // =============================== MISCELANEOUS ===============================
 
-/* global JSUtils:true */
+/* global jUtils:true */
 
 /**
  * Rounds the number to the given precision (amount of decimal digits).
- * @memberOf JSUtils.Misc
+ * @memberOf jUtils.Misc
  * @param {Numeric} number    The given number.
  * @param {Numeric} precision The given precision.
  * @return {Numeric}          The new number with adjusted precision.
  */
-JSUtils.setPrecision = function(number, precision) {
-  var isNumeric = JSUtils.isNumeric,
+jUtils.setPrecision = function(number, precision) {
+  var isNumeric = jUtils.isNumeric,
       prec;
   if (isNumeric(number) && isNumeric(precision)) {
     prec = Math.pow(10, precision);
@@ -372,7 +372,7 @@ JSUtils.setPrecision = function(number, precision) {
 };
 // ================================= OBJECTS =================================
 
-/* global JSUtils:true */
+/* global jUtils:true */
 
 /**
  * Counts the amount of properties in an object (keys).
@@ -380,18 +380,18 @@ JSUtils.setPrecision = function(number, precision) {
  * @param  {Object} obj The givne object.
  * @return {Int}        Amount of properties.
  */
-JSUtils.propertyCount = function(obj) {
+jUtils.propertyCount = function(obj) {
   if (obj !== Object(obj)) {
     throw new TypeError("Invalid object");
   } else {
-    return JSUtils.getKeys(obj).length;
+    return jUtils.getKeys(obj).length;
   }
 };
 
-JSUtils.shallowCopy = function(obj) {
+jUtils.shallowCopy = function(obj) {
   // TODO: TEST, DOC
   var copy, prop;
-  if (!JSUtils.isObject(obj)) return obj;
+  if (!jUtils.isObject(obj)) return obj;
   copy = obj.constructor();
   for (prop in obj) {
     if (obj.hasOwnProperty(prop)) copy[prop] = obj[prop];
@@ -399,20 +399,20 @@ JSUtils.shallowCopy = function(obj) {
   return copy;
 };
 
-JSUtils.deepCopy = function(obj) {
+jUtils.deepCopy = function(obj) {
   // TODO: TEST, DOC
   var out, i, len, prop;
-  if (JSUtils.isArray(obj)) {
+  if (jUtils.isArray(obj)) {
     out = [];
     for (i=0, len = obj.length; i<len; i+=1) {
-      out[i] = JSUtils.deepCopy(obj[i]);
+      out[i] = jUtils.deepCopy(obj[i]);
     }
     return out;
   }
-  if (JSUtils.isObject(obj)) {
+  if (jUtils.isObject(obj)) {
     out = {};
     for (prop in obj) {
-      out[prop] = JSUtils.deepCopy(obj[prop]);
+      out[prop] = jUtils.deepCopy(obj[prop]);
     }
     return out;
   }
@@ -420,24 +420,24 @@ JSUtils.deepCopy = function(obj) {
 };
 // ============================ REGULAR EXPRESSIONS ===========================
 
-/* global JSUtils:true */
+/* global jUtils:true */
 
-JSUtils.emailRegExp = function(email) {
+jUtils.emailRegExp = function(email) {
   // TODO: Doc and test
   return (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 };
 // ================================== STRINGS =================================
 
-/* global JSUtils:true */
+/* global jUtils:true */
 
 /**
  * Format a string in a similar way to Java or C#.
  * @method format
- * @memberOf JSUtils.Strings
+ * @memberOf jUtils.Strings
  * @param  {string} str Pre-format string.
  * @return {string}     Formatted string.
  */
-JSUtils.format = function (str) {
+jUtils.format = function (str) {
   var args = Array.prototype.slice.call(arguments, 1),
       sprintfRegex = /\{(\d+)\}/g;
 
@@ -446,7 +446,7 @@ JSUtils.format = function (str) {
   });
 };
 
-JSUtils.microTemplate = function(str, obj) {
+jUtils.microTemplate = function(str, obj) {
   // TODO: Implement, test
   for(var prop in obj) {
     str=str.replace(new RegExp('{{'+prop+'}}','g'), obj[prop]);
@@ -454,7 +454,7 @@ JSUtils.microTemplate = function(str, obj) {
   return str;
 };
 
-JSUtils.hashCode = function(str){
+jUtils.hashCode = function(str){
   //TODO: Doc, test
   var hash = 0,
       i, len, c;
@@ -475,13 +475,13 @@ JSUtils.hashCode = function(str){
  * @param  {String} translation If specified, stores the translation.
  * @return {String}             Translated text.
  */
-JSUtils.translate = function(str, lang, translation) {
-  var translations = JSUtils.getVariable('translations'),
+jUtils.translate = function(str, lang, translation) {
+  var translations = jUtils.getVariable('translations'),
       strHash;
-  if (!translations) translations = JSUtils.storeVariable('translations', {});
-  if (JSUtils.isString(str) && JSUtils.isString(lang)) {
-    strHash = JSUtils.hashCode(str + lang);
-    if (JSUtils.isString(translation)) {
+  if (!translations) translations = jUtils.storeVariable('translations', {});
+  if (jUtils.isString(str) && jUtils.isString(lang)) {
+    strHash = jUtils.hashCode(str + lang);
+    if (jUtils.isString(translation)) {
       // Store the translation
       translations[strHash] = translation;
       return translation;

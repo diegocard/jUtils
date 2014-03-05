@@ -1,5 +1,5 @@
-JSUtils
-=======
+jUtils
+======
 
 A collection of frequently used JavaScript utilities that I've either found or developed. 
 

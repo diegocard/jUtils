@@ -1,6 +1,6 @@
 // ================================= OBJECTS =================================
 
-/* global JSUtils:true */
+/* global jUtils:true */
 
 /**
  * Counts the amount of properties in an object (keys).
@@ -8,18 +8,18 @@
  * @param  {Object} obj The givne object.
  * @return {Int}        Amount of properties.
  */
-JSUtils.propertyCount = function(obj) {
+jUtils.propertyCount = function(obj) {
   if (obj !== Object(obj)) {
     throw new TypeError("Invalid object");
   } else {
-    return JSUtils.getKeys(obj).length;
+    return jUtils.getKeys(obj).length;
   }
 };
 
-JSUtils.shallowCopy = function(obj) {
+jUtils.shallowCopy = function(obj) {
   // TODO: TEST, DOC
   var copy, prop;
-  if (!JSUtils.isObject(obj)) return obj;
+  if (!jUtils.isObject(obj)) return obj;
   copy = obj.constructor();
   for (prop in obj) {
     if (obj.hasOwnProperty(prop)) copy[prop] = obj[prop];
@@ -27,20 +27,20 @@ JSUtils.shallowCopy = function(obj) {
   return copy;
 };
 
-JSUtils.deepCopy = function(obj) {
+jUtils.deepCopy = function(obj) {
   // TODO: TEST, DOC
   var out, i, len, prop;
-  if (JSUtils.isArray(obj)) {
+  if (jUtils.isArray(obj)) {
     out = [];
     for (i=0, len = obj.length; i<len; i+=1) {
-      out[i] = JSUtils.deepCopy(obj[i]);
+      out[i] = jUtils.deepCopy(obj[i]);
     }
     return out;
   }
-  if (JSUtils.isObject(obj)) {
+  if (jUtils.isObject(obj)) {
     out = {};
     for (prop in obj) {
-      out[prop] = JSUtils.deepCopy(obj[prop]);
+      out[prop] = jUtils.deepCopy(obj[prop]);
     }
     return out;
   }

@@ -1,17 +1,17 @@
 // ================================== ARRAYS ==================================
 
-/* global JSUtils:true */
+/* global jUtils:true */
 
 /**
  * Returns the position of the first element in the array that fulfills
  * the given condition.
  * @method firstIndex
- * @memberOf JSUtils.Arrays
+ * @memberOf jUtils.Arrays
  * @param  {Array} array    Array of items.
  * @param  {Function} func  Condition (returns yes or no).
  * @return {Integer}        Array position is the element was found, -1 otherwise.
  */
-JSUtils.firstIndex = function(array, func) {
+jUtils.firstIndex = function(array, func) {
   for (var i=0, len=array.length; i<len; i+=1) {
     if (func(array[i])) {
       return i;
@@ -20,9 +20,9 @@ JSUtils.firstIndex = function(array, func) {
   return -1;
 };
 
-JSUtils.replace = function(array, element, condition) {
+jUtils.replace = function(array, element, condition) {
   // TODO: Doc, test
-  JSUtils.forEach(array, function(value, index, object) {
+  jUtils.forEach(array, function(value, index, object) {
     if (!condition || condition(value, index, object)) {
       array[index] = element;
     }
@@ -30,7 +30,7 @@ JSUtils.replace = function(array, element, condition) {
   return array;
 };
 
-JSUtils.slugify = function(str) {
+jUtils.slugify = function(str) {
   //TODO: Doc, test
   var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;",
       to   = "aaaaaeeeeeiiiiooooouuuunc------",

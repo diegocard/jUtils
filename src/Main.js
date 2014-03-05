@@ -3,28 +3,28 @@
 /* global HTMLElement:false */
 
 /**
- * JSUtils main object
- * @module JSUtils
+ * jUtils main object
+ * @module jUtils
  */
 (function (global) {
   "use strict";
 
-  var JSUtils = global.JSUtils,
+  var jUtils = global.jUtils,
       // Private variables
       internal = {
         global: global,
       };
 
-  // Check that JSUtils is not already defined.
-  if (global.JSUtils) {
+  // Check that jUtils is not already defined.
+  if (global.jUtils) {
     return;
   }
 
-  JSUtils = {
+  jUtils = {
 
     /**
      * Returns the global object.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @return {Object} The global object.
      */
     getGlobal : function() {
@@ -33,7 +33,7 @@
 
     /**
      * Checks if the given object is equal to the global object.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any} elem A given element.
      * @return {Boolean}  True if the given element is equal to the global object,
      *                    false otherwise.
@@ -43,7 +43,7 @@
     },
 
     /**
-     * Stores a private variable to JSUtils. 
+     * Stores a private variable to jUtils. 
      * If the variable was already defined, it will be overridden.
      * This variable can be used through the getVariable method.
      * @param  {String} name  The variable's name.
@@ -52,7 +52,7 @@
      *                        false otherwise.
      */
     storeVariable : function(name, value) {
-      if (JSUtils.isString(name)) {
+      if (jUtils.isString(name)) {
         internal[name] = value;
         return internal[name];
       } else {
@@ -61,13 +61,13 @@
     },
 
     /**
-     * Given its name, returns the value stored in a private variable of the JSUtils module.
+     * Given its name, returns the value stored in a private variable of the jUtils module.
      * Returns undefined if the variable was not defined previously.
      * @param  {String} name Internal variable name.
      * @return {Any}         Value stored in the private variable, if found.
      */
     getVariable : function(name) {
-      if (JSUtils.isString(name)) {
+      if (jUtils.isString(name)) {
         return internal[name];
       } else {
         throw new TypeError("You must specify a variable name");
@@ -77,14 +77,14 @@
     /**
      * Returns an array with the property names for the given object.
      * If obj is not an object, then an exception is thrown.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Object} obj The given object.
      * @return {Array}      Array of property names.
      */
     getKeys : function(obj) {
       var keys = [],
           key;
-      if (!JSUtils.isObject(obj)) {
+      if (!jUtils.isObject(obj)) {
         throw new TypeError("Invalid object");
       }
       for (key in obj) {
@@ -97,15 +97,15 @@
 
     /**
      * Concise and efficient forEach implementation.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Object} obj     Elements to be iterated.
      * @param  {Function} func  Function applied to the elements in obj.
      * @param  {Object} context Context for func.
      */
     forEach : function(obj, func, context) {
       var i, len, keys;
-      if (JSUtils.isStrictlyObject(obj)) {
-        keys = JSUtils.getKeys(obj);
+      if (jUtils.isStrictlyObject(obj)) {
+        keys = jUtils.getKeys(obj);
         for (i=0, len=keys.length; i<len; i+=1) {
           func.call(context, obj[keys[i]], keys[i], obj);
         }
@@ -118,7 +118,7 @@
 
     /**
      * Checks if the given element is an array.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     arr Element to be checked.
      * @return {Boolean}     True if the given element is an array,
      *                       false otherwise.
@@ -129,29 +129,29 @@
 
     /**
      * Checks if the given element is an object (includes arrays but not functions).
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     obj Element to be checked.
      * @return {Boolean}     True if the given element is an array,
      *                       false otherwise.
      */
     isObject : function(obj) {
-      return obj === Object(obj) && !JSUtils.isFunction(obj);
+      return obj === Object(obj) && !jUtils.isFunction(obj);
     },
 
     /**
      * Checks if the given element is an object (does not include arrays and functions).
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     obj Element to be checked.
      * @return {Boolean}     True if the given element is only an object,
      *                       false otherwise.
      */
     isStrictlyObject : function(obj) {
-      return JSUtils.isObject(obj) && !JSUtils.isArray(obj);
+      return jUtils.isObject(obj) && !jUtils.isArray(obj);
     },
 
     /**
      * Checks if the given element is boolean.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     bool Element to be checked.
      * @return {Boolean}      True if the given element is a boolean value,
      *                        false otherwise.
@@ -162,7 +162,7 @@
 
     /**
      * Checks if the given element is a string.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     str Element to be checked.
      * @return {Boolean}     True if the given element is a string,
      *                       false otherwise.
@@ -173,7 +173,7 @@
 
     /**
      * Checks if the given element is a function.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     fun Element to be checked.
      * @return {Boolean}     True if the given element is a function,
      *                       false otherwise.
@@ -184,7 +184,7 @@
 
     /**
      * Checks if the given element is undefined.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     obj Element to be checked.
      * @return {Boolean}     True if the given element is undefined,
      *                       false otherwise.
@@ -195,7 +195,7 @@
 
     /**
      * Checks if the given element is a number.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     num Element to be checked.
      * @return {Boolean}     True if the given element is a number,
      *                       false otherwise.
@@ -206,7 +206,7 @@
     
     /**
      * Checks if the given element is an HTML element.
-     * @memberOf JSUtils.Main
+     * @memberOf jUtils.Main
      * @param  {Any}     element Element to be checked.
      * @return {Boolean}         True if the given element is an HTML element,
      *                           false otherwise.
@@ -216,6 +216,6 @@
     },
   };
   
-  global.JSUtils = JSUtils;
+  global.jUtils = jUtils;
   
 }(this));

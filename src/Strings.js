@@ -1,15 +1,15 @@
 // ================================== STRINGS =================================
 
-/* global JSUtils:true */
+/* global jUtils:true */
 
 /**
  * Format a string in a similar way to Java or C#.
  * @method format
- * @memberOf JSUtils.Strings
+ * @memberOf jUtils.Strings
  * @param  {string} str Pre-format string.
  * @return {string}     Formatted string.
  */
-JSUtils.format = function (str) {
+jUtils.format = function (str) {
   var args = Array.prototype.slice.call(arguments, 1),
       sprintfRegex = /\{(\d+)\}/g;
 
@@ -18,7 +18,7 @@ JSUtils.format = function (str) {
   });
 };
 
-JSUtils.microTemplate = function(str, obj) {
+jUtils.microTemplate = function(str, obj) {
   // TODO: Implement, test
   for(var prop in obj) {
     str=str.replace(new RegExp('{{'+prop+'}}','g'), obj[prop]);
@@ -26,7 +26,7 @@ JSUtils.microTemplate = function(str, obj) {
   return str;
 };
 
-JSUtils.hashCode = function(str){
+jUtils.hashCode = function(str){
   //TODO: Doc, test
   var hash = 0,
       i, len, c;
@@ -47,13 +47,13 @@ JSUtils.hashCode = function(str){
  * @param  {String} translation If specified, stores the translation.
  * @return {String}             Translated text.
  */
-JSUtils.translate = function(str, lang, translation) {
-  var translations = JSUtils.getVariable('translations'),
+jUtils.translate = function(str, lang, translation) {
+  var translations = jUtils.getVariable('translations'),
       strHash;
-  if (!translations) translations = JSUtils.storeVariable('translations', {});
-  if (JSUtils.isString(str) && JSUtils.isString(lang)) {
-    strHash = JSUtils.hashCode(str + lang);
-    if (JSUtils.isString(translation)) {
+  if (!translations) translations = jUtils.storeVariable('translations', {});
+  if (jUtils.isString(str) && jUtils.isString(lang)) {
+    strHash = jUtils.hashCode(str + lang);
+    if (jUtils.isString(translation)) {
       // Store the translation
       translations[strHash] = translation;
       return translation;

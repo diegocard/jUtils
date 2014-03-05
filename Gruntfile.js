@@ -23,7 +23,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: allSources,
-        dest: 'JSUtils.js'
+        dest: 'jUtils.js'
       },
     },
     uglify: {
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
       },
       build: {
         src: allSources,
-        dest: 'JSUtils.min.js'
+        dest: 'jUtils.min.js'
       }
     },
     jsdoc : {
