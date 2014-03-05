@@ -5,15 +5,11 @@
 /**
  * Counts the amount of properties in an object (keys).
  * Not that this method only counts own properties.
- * @param  {Object} obj The givne object.
+ * @param  {Object} obj The given object.
  * @return {Int}        Amount of properties.
  */
 jUtils.propertyCount = function(obj) {
-  if (obj !== Object(obj)) {
-    throw new TypeError("Invalid object");
-  } else {
-    return jUtils.getKeys(obj).length;
-  }
+  return jUtils.getKeys(obj).length;
 };
 
 jUtils.shallowCopy = function(obj) {

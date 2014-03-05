@@ -6,7 +6,7 @@
  * RESTRICTION: IE8+
  */
 jUtils.getJSON = function(url, success, error) {
-  // TODO: Doc, test, add extra parameters
+  //TODO: Doc, test, add extra parameters
   var request = new XMLHttpRequest(),
       data;
   request.open('GET', url, true);

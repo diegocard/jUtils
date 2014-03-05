@@ -228,7 +228,7 @@
  * RESTRICTION: IE8+
  */
 jUtils.getJSON = function(url, success, error) {
-  // TODO: Doc, test, add extra parameters
+  //TODO: Doc, test, add extra parameters
   var request = new XMLHttpRequest(),
       data;
   request.open('GET', url, true);
@@ -377,15 +377,11 @@ jUtils.setPrecision = function(number, precision) {
 /**
  * Counts the amount of properties in an object (keys).
  * Not that this method only counts own properties.
- * @param  {Object} obj The givne object.
+ * @param  {Object} obj The given object.
  * @return {Int}        Amount of properties.
  */
 jUtils.propertyCount = function(obj) {
-  if (obj !== Object(obj)) {
-    throw new TypeError("Invalid object");
-  } else {
-    return jUtils.getKeys(obj).length;
-  }
+  return jUtils.getKeys(obj).length;
 };
 
 jUtils.shallowCopy = function(obj) {
