@@ -6,7 +6,7 @@ module.exports = function(grunt) {
       allSources = [
         'src/Core.js', 
         'src/Ajax.js', 
-        'src/Arrays.js', 
+        'src/Collections.js', 
         'src/Functions.js', 
         'src/Misc.js',
         'src/Objects.js', 

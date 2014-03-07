@@ -115,7 +115,26 @@
         }
       }
     },
-
+    
+    first : function(obj, cond, context) {
+      // TODO: DOC
+      var i, len, keys;
+      if (jUtils.isStrictlyObject(obj)) {
+        keys = jUtils.getKeys(obj);
+        for (i=0, len=keys.length; i<len; i+=1) {
+          if (cond.call(context, obj[keys[i]], keys[i], obj)) {
+            return  { element:obj[keys[i]], key:keys[i] };
+          }
+        }
+      } else {
+        for (i=0, len=obj.length; i<len; i+=1) {
+          if (cond.call(context, obj[i], i, obj)) {
+            return { element:obj[i], index:i };
+          }
+        }
+      }
+    },
+    
     /**
      * Checks if the given element is an array.
      * @memberOf jUtils.Main

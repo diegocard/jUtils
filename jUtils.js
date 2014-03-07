@@ -117,6 +117,25 @@
       }
     },
     
+    first : function(obj, cond, context) {
+      // TODO: DOC
+      var i, len, keys;
+      if (jUtils.isStrictlyObject(obj)) {
+        keys = jUtils.getKeys(obj);
+        for (i=0, len=keys.length; i<len; i+=1) {
+          if (cond.call(context, obj[keys[i]], keys[i], obj)) {
+            return  { element:obj[keys[i]], key:keys[i] };
+          }
+        }
+      } else {
+        for (i=0, len=obj.length; i<len; i+=1) {
+          if (cond.call(context, obj[i], i, obj)) {
+            return { element:obj[i], index:i };
+          }
+        }
+      }
+    },
+    
     /**
      * Checks if the given element is an array.
      * @memberOf jUtils.Main
@@ -288,71 +307,30 @@ jUtils.ajaxGet = function(url, success, error) {
 // TODO: Check if method chaining works, add to other methods
 // TODO: Combine getJSON, ajaxPost and ajaxGet into a single ajax function?
 
-// ================================== ARRAYS ==================================
+// ================================ COLLECTIONS ===============================
 
 /* global jUtils:true */
 
 /**
- * Returns the position of the first element in the array that fulfills
- * the given condition.
- * @method firstIndex
- * @memberOf jUtils.Arrays
- * @param  {Array} array    Array of items.
- * @param  {Function} cond  Condition (returns yes or no).
- * @return {Integer}        Array position is the element was found, -1 otherwise.
- */
-jUtils.firstIndex = function(array, cond) {
-  for (var i=0, len=array.length; i<len; i+=1) {
-    if (cond(array[i])) {
-      return i;
-    }
-  }
-  return -1;
-};
-
-/**
- * Replaces all array components that satisfy the given condition.
+ * Replaces all collection components that satisfy the given condition.
  * @method replace
- * @memberOf jUtils.Arrays
- * @param  {Array} array      Array of items.
- * @param  {Any} replaceWith  Array elements that satisfy the given condition will be replaced by this.
- * @return {Array}            The resulting array after replacing.
+ * @memberOf jUtils.Collections
+ * @param  {Collection} col  Collection of items.
+ * @param  {Any} replaceWith Collection elements that satisfy the given condition will be replaced by this.
+ * @return {Collection}      The resulting collection after replacing.
  */
-jUtils.replace = function(array, replaceWith, condition) {
-  jUtils.forEach(array, function(value, index, object) {
+jUtils.replace = function(col, replaceWith, condition) {
+  jUtils.forEach(col, function(value, index, object) {
     if (!condition || condition(value, index, object)) {
       if (jUtils.isFunction(replaceWith)) {
-        array[index] = replaceWith(array[index], index, array);  
+        col[index] = replaceWith(col[index], index, col);  
       } else {
-        array[index] = replaceWith;
+        col[index] = replaceWith;
       }
     }
   });
-  return array;
+  return col;
 };
-
-jUtils.slugify = function(str) {
-  //TODO: Doc, test
-  var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;",
-      to   = "aaaaaeeeeeiiiiooooouuuunc------",
-      i, len;
-
-  str = str.replace(/^\s+|\s+$/g, ''); // trim
-  str = str.toLowerCase();
-
-  // remove accents, swap ñ for n, etc
-  for (i=0, len=from.length ; i<len ; i++) {
-    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-  }
-
-  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-    .replace(/\s+/g, '-') // collapse whitespace and replace by -
-    .replace(/-+/g, '-'); // collapse dashes
-
-  return str;
-};
-
-
 // ================================= FUNCTIONS ================================
 
 /* global jUtils:true */
@@ -525,3 +503,25 @@ jUtils.translate = function(str, lang, translation) {
     throw new TypeError('You must provide at least a string and language');
   }
 };
+
+jUtils.slugify = function(str) {
+  //TODO: Doc, test
+  var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;",
+      to   = "aaaaaeeeeeiiiiooooouuuunc------",
+      i, len;
+
+  str = str.replace(/^\s+|\s+$/g, ''); // trim
+  str = str.toLowerCase();
+
+  // remove accents, swap ñ for n, etc
+  for (i=0, len=from.length ; i<len ; i++) {
+    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+  }
+
+  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+    .replace(/-+/g, '-'); // collapse dashes
+
+  return str;
+};
+

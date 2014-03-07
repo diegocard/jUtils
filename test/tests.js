@@ -271,14 +271,14 @@ test("translate", function() {
   ok(translation1 === "Esta es una prueba de traducción", "translate: successful translation");
 });
 
-/* ================================= ARRAYS ================================ */
+/* =============================== COLLECTIONS ============================= */
 
 /**
- * jUtils.firstIndex tests.
+ * jUtils.first tests.
  * @memberOf Tests
  */
-test("firstIndex", function() {
-  var firstIndex = jUtils.firstIndex,
+test("first", function() {
+  var first = jUtils.first,
       array1 = [1,2,3,4],
       cond1 = function(elem) {
         return elem === 2;
@@ -288,8 +288,10 @@ test("firstIndex", function() {
         return elem.length === 3;
       };
 
-  ok(firstIndex(array1, cond1) === 1, "firstIndex: Numeric array");
-  ok(firstIndex(array2, cond2) === 2, "firstIndex: String array");
+  ok(first(array1, cond1).index === 1, "first: Numeric array index");
+  ok(first(array1, cond1).element === 2, "first: Numeric array element");
+  ok(first(array2, cond2).index === 2, "first: String array index");
+  ok(first(array2, cond2).element === 'ccc', "first: String array element");
 });
 
 /**
