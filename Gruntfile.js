@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
   var header = '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
       allSources = [
-        'src/Main.js', 
+        'src/Core.js', 
         'src/Ajax.js', 
         'src/Arrays.js', 
         'src/Functions.js', 
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: header,
-        report: 'min'
+        report: 'gzip'
       },
       build: {
         src: allSources,
