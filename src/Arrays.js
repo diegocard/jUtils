@@ -8,23 +8,34 @@
  * @method firstIndex
  * @memberOf jUtils.Arrays
  * @param  {Array} array    Array of items.
- * @param  {Function} func  Condition (returns yes or no).
+ * @param  {Function} cond  Condition (returns yes or no).
  * @return {Integer}        Array position is the element was found, -1 otherwise.
  */
-jUtils.firstIndex = function(array, func) {
+jUtils.firstIndex = function(array, cond) {
   for (var i=0, len=array.length; i<len; i+=1) {
-    if (func(array[i])) {
+    if (cond(array[i])) {
       return i;
     }
   }
   return -1;
 };
 
-jUtils.replace = function(array, element, condition) {
-  // TODO: Doc, test
+/**
+ * Replaces all array components that satisfy the given condition.
+ * @method replace
+ * @memberOf jUtils.Arrays
+ * @param  {Array} array      Array of items.
+ * @param  {Any} replaceWith  Array elements that satisfy the given condition will be replaced by this.
+ * @return {Array}            The resulting array after replacing.
+ */
+jUtils.replace = function(array, replaceWith, condition) {
   jUtils.forEach(array, function(value, index, object) {
     if (!condition || condition(value, index, object)) {
-      array[index] = element;
+      if (jUtils.isFunction(replaceWith)) {
+        array[index] = replaceWith(array[index], index, array);  
+      } else {
+        array[index] = replaceWith;
+      }
     }
   });
   return array;

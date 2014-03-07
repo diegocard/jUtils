@@ -1,5 +1,7 @@
 /* ================================== MAIN ================================= */
 
+/* global jUtils:false, ok:false, test:false, throws:false*/
+
 /**
  * jUtils.getGlobal and jUtils.isGLobal tests.
  * @memberOf Tests
@@ -288,6 +290,65 @@ test("firstIndex", function() {
 
   ok(firstIndex(array1, cond1) === 1, "firstIndex: Numeric array");
   ok(firstIndex(array2, cond2) === 2, "firstIndex: String array");
+});
+
+/**
+ * jUtils.replace tests.
+ * @memberOf Tests
+ */
+test("replace", function() {
+  var replace = jUtils.replace,
+      equalArrays = function(arr1, arr2) {
+        return JSON.stringify(arr1) === JSON.stringify(arr2);
+      },
+      double = function(elem) {
+        return 2*elem;
+      },
+      is2 = function(elem) {
+        return elem === 2;
+      },
+      multiplyIndexAndLength = function(elem, index, array) {
+        return index*(array.length);
+      },
+      length2 = function(elem) {
+        return elem.length === 2;
+      };
+
+  ok(
+    equalArrays(
+      replace([1,2,3,4], double), 
+      [2,4,6,8]
+    ), "replace: No condition specified");
+  ok(
+    equalArrays(
+      replace([1,2,3,4], double, is2), 
+      [1,4,3,4]
+    ), "replace: Condition and function element specified");
+  ok(
+    equalArrays(
+      replace([1,2,3,4], multiplyIndexAndLength),
+      [0,4,8,12]
+    ), "replace: Condition and complex function element specified");
+  ok(
+    equalArrays(
+      replace(['a', 'bb', 'ccc', 'dddd'], 'z', length2),
+      ['a', 'z', 'ccc', 'dddd']
+    ),"replace: Specific element given");
+  ok(
+    equalArrays(
+      replace(['a', 'bb', [1, 2], 'dddd'], 'z', length2),
+      ['a', 'z', 'z', 'dddd']
+    ), "replace: Different types of elements in array");
+  ok(
+    equalArrays(
+      replace([], 'z', length2), 
+      []
+    ), "replace: Empty array");
+  ok(
+    equalArrays(
+      replace([], 'z'), 
+      []
+    ), "replace: Empty array");
 });
 
 /* ================================ OBJECTS ================================ */
