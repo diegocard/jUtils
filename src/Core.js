@@ -9,18 +9,17 @@
 (function (global) {
   "use strict";
 
-  var jUtils = global.jUtils,
-      // Private variables
-      internal = {
+  // Private variables
+  var internal = {
         global: global,
-      };
+      }, $;
 
   // Check that jUtils is not already defined.
   if (global.jUtils) {
     return;
   }
 
-  jUtils = {
+  $ = {
 
     /**
      * Returns the global object.
@@ -52,7 +51,7 @@
      *                        false otherwise.
      */
     storeVariable : function(name, value) {
-      if (jUtils.isString(name)) {
+      if ($.isString(name)) {
         internal[name] = value;
         return internal[name];
       } else {
@@ -67,7 +66,7 @@
      * @return {Any}         Value stored in the private variable, if found.
      */
     getVariable : function(name) {
-      if (jUtils.isString(name)) {
+      if ($.isString(name)) {
         return internal[name];
       } else {
         throw new TypeError("You must specify a variable name");
@@ -84,7 +83,7 @@
     getKeys : function(obj) {
       var keys = [],
           key;
-      if (!jUtils.isObject(obj)) {
+      if (!$.isObject(obj)) {
         throw new TypeError("Invalid object");
       }
       for (key in obj) {
@@ -104,8 +103,8 @@
      */
     forEach : function(obj, func, context) {
       var i, len, keys;
-      if (jUtils.isStrictlyObject(obj)) {
-        keys = jUtils.getKeys(obj);
+      if ($.isStrictlyObject(obj)) {
+        keys = $.getKeys(obj);
         for (i=0, len=keys.length; i<len; i+=1) {
           func.call(context, obj[keys[i]], keys[i], obj);
         }
@@ -119,8 +118,8 @@
     first : function(obj, cond, context) {
       // TODO: DOC
       var i, len, keys;
-      if (jUtils.isStrictlyObject(obj)) {
-        keys = jUtils.getKeys(obj);
+      if ($.isStrictlyObject(obj)) {
+        keys = $.getKeys(obj);
         for (i=0, len=keys.length; i<len; i+=1) {
           if (cond.call(context, obj[keys[i]], keys[i], obj)) {
             return  { element:obj[keys[i]], key:keys[i] };
@@ -154,7 +153,7 @@
      *                       false otherwise.
      */
     isObject : function(obj) {
-      return obj === Object(obj) && !jUtils.isFunction(obj);
+      return obj === Object(obj) && !$.isFunction(obj);
     },
 
     /**
@@ -165,7 +164,7 @@
      *                       false otherwise.
      */
     isStrictlyObject : function(obj) {
-      return jUtils.isObject(obj) && !jUtils.isArray(obj);
+      return $.isObject(obj) && !$.isArray(obj);
     },
 
     /**
@@ -235,6 +234,6 @@
     },
   };
   
-  global.jUtils = jUtils;
+  global.jUtils = $;
   
 }(this));

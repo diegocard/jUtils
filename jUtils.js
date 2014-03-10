@@ -10,18 +10,17 @@
 (function (global) {
   "use strict";
 
-  var jUtils = global.jUtils,
-      // Private variables
-      internal = {
+  // Private variables
+  var internal = {
         global: global,
-      };
+      }, $;
 
   // Check that jUtils is not already defined.
   if (global.jUtils) {
     return;
   }
 
-  jUtils = {
+  $ = {
 
     /**
      * Returns the global object.
@@ -53,7 +52,7 @@
      *                        false otherwise.
      */
     storeVariable : function(name, value) {
-      if (jUtils.isString(name)) {
+      if ($.isString(name)) {
         internal[name] = value;
         return internal[name];
       } else {
@@ -68,7 +67,7 @@
      * @return {Any}         Value stored in the private variable, if found.
      */
     getVariable : function(name) {
-      if (jUtils.isString(name)) {
+      if ($.isString(name)) {
         return internal[name];
       } else {
         throw new TypeError("You must specify a variable name");
@@ -85,7 +84,7 @@
     getKeys : function(obj) {
       var keys = [],
           key;
-      if (!jUtils.isObject(obj)) {
+      if (!$.isObject(obj)) {
         throw new TypeError("Invalid object");
       }
       for (key in obj) {
@@ -105,8 +104,8 @@
      */
     forEach : function(obj, func, context) {
       var i, len, keys;
-      if (jUtils.isStrictlyObject(obj)) {
-        keys = jUtils.getKeys(obj);
+      if ($.isStrictlyObject(obj)) {
+        keys = $.getKeys(obj);
         for (i=0, len=keys.length; i<len; i+=1) {
           func.call(context, obj[keys[i]], keys[i], obj);
         }
@@ -120,8 +119,8 @@
     first : function(obj, cond, context) {
       // TODO: DOC
       var i, len, keys;
-      if (jUtils.isStrictlyObject(obj)) {
-        keys = jUtils.getKeys(obj);
+      if ($.isStrictlyObject(obj)) {
+        keys = $.getKeys(obj);
         for (i=0, len=keys.length; i<len; i+=1) {
           if (cond.call(context, obj[keys[i]], keys[i], obj)) {
             return  { element:obj[keys[i]], key:keys[i] };
@@ -155,7 +154,7 @@
      *                       false otherwise.
      */
     isObject : function(obj) {
-      return obj === Object(obj) && !jUtils.isFunction(obj);
+      return obj === Object(obj) && !$.isFunction(obj);
     },
 
     /**
@@ -166,7 +165,7 @@
      *                       false otherwise.
      */
     isStrictlyObject : function(obj) {
-      return jUtils.isObject(obj) && !jUtils.isArray(obj);
+      return $.isObject(obj) && !$.isArray(obj);
     },
 
     /**
@@ -236,136 +235,140 @@
     },
   };
   
-  global.jUtils = jUtils;
+  global.jUtils = $;
   
 }(this));
 // =================================== AJAX ===================================
 
 /* global jUtils:true, XMLHttpRequest:false */
 
-/*
- * RESTRICTION: IE8+
- */
-jUtils.getJSON = function(url, success, error) {
-  //TODO: Doc, test, add extra parameters
-  var request = new XMLHttpRequest(),
-      data;
-  request.open('GET', url, true);
+(function($) {
+  
+  /*
+   * RESTRICTION: IE8+
+   */
+  $.getJSON = function(url, success, error) {
+    //TODO: Doc, test, add extra parameters
+    var request = new XMLHttpRequest(),
+        data;
+    request.open('GET', url, true);
 
-  request.onreadystatechange = function() {
-    if (this.readyState === 4){
-      if (this.status >= 200 && this.status < 400){
-        data = JSON.parse(this.responseText);
-        success(data);
-      } else {
-        error();
+    request.onreadystatechange = function() {
+      if (this.readyState === 4){
+        if (this.status >= 200 && this.status < 400){
+          data = JSON.parse(this.responseText);
+          success(data);
+        } else {
+          error();
+        }
       }
-    }
+    };
+
+    request.send();
+    request = null;
+    return $;
   };
 
-  request.send();
-  request = null;
-  return jUtils;
-};
 
-
-/*
- * RESTRICTION: IE8+
- */
-jUtils.ajaxPost = function(url, data) {
-  // TODO: Doc, test, add extra parameters, check if success and error functions can be added as parameters
-  var request = new XMLHttpRequest();
-  request.open('POST', url, true);
-  request.send(data);
-  return jUtils;
-};
-
-/*
- * RESTRICTION: IE9+
- */
-jUtils.ajaxGet = function(url, success, error) {
-  // TODO: Doc, test
-  var request = new XMLHttpRequest(),
-      resp;
-  request.open('GET', url, true);
-
-  request.onreadystatechange = function() {
-    if (this.readyState === 4){
-      if (this.status >= 200 && this.status < 400){
-        resp = this.responseText;
-        success(resp);
-      } else {
-        error();
-      }
-    }
+  /*
+   * RESTRICTION: IE8+
+   */
+  $.ajaxPost = function(url, data) {
+    // TODO: Doc, test, add extra parameters, check if success and error functions can be added as parameters
+    var request = new XMLHttpRequest();
+    request.open('POST', url, true);
+    request.send(data);
+    return $;
   };
 
-  request.send();
-  request = null;
-};
+  /*
+   * RESTRICTION: IE9+
+   */
+  $.ajaxGet = function(url, success, error) {
+    // TODO: Doc, test
+    var request = new XMLHttpRequest(),
+        resp;
+    request.open('GET', url, true);
+
+    request.onreadystatechange = function() {
+      if (this.readyState === 4){
+        if (this.status >= 200 && this.status < 400){
+          resp = this.responseText;
+          success(resp);
+        } else {
+          error();
+        }
+      }
+    };
+
+    request.send();
+    request = null;
+  };
+
+}(jUtils));
 
 // TODO: Check if method chaining works, add to other methods
 // TODO: Combine getJSON, ajaxPost and ajaxGet into a single ajax function?
 
 // ================================ COLLECTIONS ===============================
 
-/* global $:true */
+/* global jUtils:true */
 
 (function($){
   /**
- * Replaces all collection components that satisfy the given condition.
- * @method replace
- * @memberOf $.Collections
- * @param  {Collection} col  Collection of items.
- * @param  {Any} replaceWith Collection elements that satisfy the given condition will be replaced by this.
- * @return {Collection}      The resulting collection after replacing.
- */
-$.replace = function(col, replaceWith, condition) {
-  $.forEach(col, function(value, index, object) {
-    if (!condition || condition(value, index, object)) {
-      if ($.isFunction(replaceWith)) {
-        col[index] = replaceWith(col[index], index, col);  
-      } else {
-        col[index] = replaceWith;
+   * Replaces all collection components that satisfy the given condition.
+   * @method replace
+   * @memberOf jUtils.Collections
+   * @param  {Collection} col  Collection of items.
+   * @param  {Any} replaceWith Collection elements that satisfy the given condition will be replaced by this.
+   * @param  {Function} cond   Optional condition that replaced elements must satisfy.
+   * @return {Collection}      The resulting collection after replacing.
+   */
+  $.replace = function(col, replaceWith, condition) {
+    $.forEach(col, function(value, index, object) {
+      if (!condition || condition(value, index, object)) {
+        if ($.isFunction(replaceWith)) {
+          col[index] = replaceWith(col[index], index, col);  
+        } else {
+          col[index] = replaceWith;
+        }
       }
-    }
-  });
-  return col;
-};
+    });
+    return col;
+  };
 
-$.indexes = function(col, cond, context) {
-  //TODO: Doc, test
-  var results = [];
-  $.forEach(col, function(elem, index, obj) {
-    if (cond.call(context, elem, index, obj)) {
-      results.push(index);
-    }
-  });
-  return results;
-};
+  $.indexes = function(col, cond, context) {
+    //TODO: Doc, test
+    var results = [];
+    $.forEach(col, function(elem, index, obj) {
+      if (cond.call(context, elem, index, obj)) {
+        results.push(index);
+      }
+    });
+    return results;
+  };
 
-$.findAll = function(col, cond, context) {
-  //TODO: Doc, test
-  var results = [];
-  $.forEach(col, function(elem, index, obj) {
-    if (cond.call(context, elem, index, obj)) {
-      results.push(elem);
-    }
-  });
-  return results;
-};
+  $.findAll = function(col, cond, context) {
+    //TODO: Doc, test
+    var results = [];
+    $.forEach(col, function(elem, index, obj) {
+      if (cond.call(context, elem, index, obj)) {
+        results.push(elem);
+      }
+    });
+    return results;
+  };
 
-$.all = function(col, cond, context) {
-  //TODO: Doc, test
-  return $.indexes(col, cond, context).length === col.length;
-};
+  $.all = function(col, cond, context) {
+    //TODO: Doc, test
+    return $.indexes(col, cond, context).length === col.length;
+  };
 
-$.any = function(col, cond, context) {
-  //TODO: Doc, test
-  var first = $.first(col, cond, context);
-  return $.isObject(first);
-};
-  
+  $.any = function(col, cond, context) {
+    //TODO: Doc, test
+    var first = $.first(col, cond, context);
+    return $.isObject(first);
+  };
   
 }(jUtils));
 
@@ -374,193 +377,216 @@ $.any = function(col, cond, context) {
 
 /* global jUtils:true */
 
-jUtils.storeConstant = function() {
-  //TODO: implement
-};
+(function($) {
+  
+  $.storeConstant = function() {
+    //TODO: implement
+  };
+  
+}(jUtils));
+
 // =============================== MISCELANEOUS ===============================
 
 /* global jUtils:true */
 
-/**
- * Rounds the number to the given precision (amount of decimal digits).
- * @memberOf jUtils.Misc
- * @param {Numeric} number    The given number.
- * @param {Numeric} precision The given precision.
- * @return {Numeric}          The new number with adjusted precision.
- */
-jUtils.setPrecision = function(number, precision) {
-  var isNumeric = jUtils.isNumeric,
-      prec;
-  if (isNumeric(number) && isNumeric(precision)) {
-    prec = Math.pow(10, precision);
-    return Math.round(number*prec) / prec;
-  } else {
-    throw new TypeError("You must specify a numeric number and precision");
-  }
-};
+(function($) {
 
-jUtils.equals = function(/* args */) {
-  // TODO: Finish, compress, doc, test based on underscore tests
-  var args = Array.prototype.slice.call(arguments),
-      equal2 = function(obj1, obj2) {
-        if (typeof obj1 !== typeof obj2) {
-          return false;
-        } else {
-          if (jUtils.isFunction(obj1)) {
-            return obj1.toString === obj2.toString();
-          } else {
-            return JSON.stringify(obj1) === JSON.stringify(obj2);
-          }
-        }
-        return equal && jUtils.equals(obj2, rest);
-      };
-  return jUtils.all(args, function(elem, index) {
-    // All arguments are equal to the previous one
-    if (index > 0) {
-      return equal2(elem, args[index - 1]);
+  /**
+   * Rounds the number to the given precision (amount of decimal digits).
+   * @memberOf jUtils.Misc
+   * @param {Numeric} number    The given number.
+   * @param {Numeric} precision The given precision.
+   * @return {Numeric}          The new number with adjusted precision.
+   */
+  $.setPrecision = function(number, precision) {
+    var isNumeric = $.isNumeric,
+        prec;
+    if (isNumeric(number) && isNumeric(precision)) {
+      prec = Math.pow(10, precision);
+      return Math.round(number*prec) / prec;
     } else {
-      return true;
+      throw new TypeError("You must specify a numeric number and precision");
     }
-  });
-};
+  };
+
+  $.equals = function(/* args */) {
+    // TODO: Finish, compress, doc, test based on underscore tests
+    var args = Array.prototype.slice.call(arguments),
+        equal2 = function(obj1, obj2) {
+          if (typeof obj1 !== typeof obj2) {
+            return false;
+          } else {
+            if ($.isFunction(obj1)) {
+              return obj1.toString === obj2.toString();
+            } else {
+              return JSON.stringify(obj1) === JSON.stringify(obj2);
+            }
+          }
+          return equal && $.equals(obj2, rest);
+        };
+    return $.all(args, function(elem, index) {
+      // All arguments are equal to the previous one
+      if (index > 0) {
+        return equal2(elem, args[index - 1]);
+      } else {
+        return true;
+      }
+    });
+  };
+  
+}(jUtils));
 // ================================= OBJECTS =================================
 
 /* global jUtils:true */
 
-/**
- * Counts the amount of properties in an object (keys).
- * Not that this method only counts own properties.
- * @param  {Object} obj The given object.
- * @return {Int}        Amount of properties.
- */
-jUtils.propertyCount = function(obj) {
-  return jUtils.getKeys(obj).length;
-};
+(function($) {
+  
+  /**
+   * Counts the amount of properties in an object (keys).
+   * Not that this method only counts own properties.
+   * @param  {Object} obj The given object.
+   * @return {Int}        Amount of properties.
+   */
+  $.propertyCount = function(obj) {
+    return $.getKeys(obj).length;
+  };
 
-jUtils.shallowCopy = function(obj) {
-  // TODO: TEST, DOC
-  var copy, prop;
-  if (!jUtils.isObject(obj)) return obj;
-  copy = obj.constructor();
-  for (prop in obj) {
-    if (obj.hasOwnProperty(prop)) copy[prop] = obj[prop];
-  }
-  return copy;
-};
-
-jUtils.deepCopy = function(obj) {
-  // TODO: TEST, DOC
-  var out, i, len, prop;
-  if (jUtils.isArray(obj)) {
-    out = [];
-    for (i=0, len = obj.length; i<len; i+=1) {
-      out[i] = jUtils.deepCopy(obj[i]);
-    }
-    return out;
-  }
-  if (jUtils.isObject(obj)) {
-    out = {};
+  $.shallowCopy = function(obj) {
+    // TODO: TEST, DOC
+    var copy, prop;
+    if (!$.isObject(obj)) return obj;
+    copy = obj.constructor();
     for (prop in obj) {
-      out[prop] = jUtils.deepCopy(obj[prop]);
+      if (obj.hasOwnProperty(prop)) copy[prop] = obj[prop];
     }
-    return out;
-  }
-  return obj;
-};
+    return copy;
+  };
+
+  $.deepCopy = function(obj) {
+    // TODO: TEST, DOC
+    var out, i, len, prop;
+    if ($.isArray(obj)) {
+      out = [];
+      for (i=0, len = obj.length; i<len; i+=1) {
+        out[i] = $.deepCopy(obj[i]);
+      }
+      return out;
+    }
+    if ($.isObject(obj)) {
+      out = {};
+      for (prop in obj) {
+        out[prop] = $.deepCopy(obj[prop]);
+      }
+      return out;
+    }
+    return obj;
+  };
+
+}(jUtils));
+
+
 // ============================ REGULAR EXPRESSIONS ===========================
 
 /* global jUtils:true */
 
-jUtils.emailRegExp = function(email) {
-  // TODO: Doc and test
-  return (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-};
+(function($) {
+  
+  $.emailRegExp = function(email) {
+    // TODO: Doc and test
+    return (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+  };
+  
+}(jUtils));
+
 // ================================== STRINGS =================================
 
 /* global jUtils:true */
 
-/**
- * Format a string in a similar way to Java or C#.
- * @method format
- * @memberOf jUtils.Strings
- * @param  {string} str Pre-format string.
- * @return {string}     Formatted string.
- */
-jUtils.format = function (str) {
-  var args = Array.prototype.slice.call(arguments, 1),
-      sprintfRegex = /\{(\d+)\}/g;
+(function($) {
+  
+  /**
+   * Format a string in a similar way to Java or C#.
+   * @method format
+   * @memberOf jUtils.Strings
+   * @param  {string} str Pre-format string.
+   * @return {string}     Formatted string.
+   */
+  $.format = function (str) {
+    var args = Array.prototype.slice.call(arguments, 1),
+        sprintfRegex = /\{(\d+)\}/g;
 
-  return str.replace(sprintfRegex, function(match, number) {
-    return number in args ? args[number] : match;
-  });
-};
+    return str.replace(sprintfRegex, function(match, number) {
+      return number in args ? args[number] : match;
+    });
+  };
 
-jUtils.microTemplate = function(str, obj) {
-  // TODO: Implement, test
-  for(var prop in obj) {
-    str=str.replace(new RegExp('{{'+prop+'}}','g'), obj[prop]);
-  }
-  return str;
-};
-
-jUtils.hashCode = function(str){
-  //TODO: Doc, test
-  var hash = 0,
-      i, len, c;
-  if (str.length === 0) return hash;
-  for (i=0, len=str.length; i<len; i++) {
-      c     = str.charCodeAt(i);
-      hash  = ((hash<<5)-hash)+c;
-      hash |= 0; // Convert to 32bit integer
-  }
-  return hash;
-};
-
-/**
- * Stored and returns text translations.
- * @requires JUtils.hashCode
- * @param  {String} str         Text to be translated.
- * @param  {String} lang        The language.
- * @param  {String} translation If specified, stores the translation.
- * @return {String}             Translated text.
- */
-jUtils.translate = function(str, lang, translation) {
-  var translations = jUtils.getVariable('translations'),
-      strHash;
-  if (!translations) translations = jUtils.storeVariable('translations', {});
-  if (jUtils.isString(str) && jUtils.isString(lang)) {
-    strHash = jUtils.hashCode(str + lang);
-    if (jUtils.isString(translation)) {
-      // Store the translation
-      translations[strHash] = translation;
-      return translation;
-    } else {
-      // Return the translation
-      return translations[strHash];
+  $.microTemplate = function(str, obj) {
+    // TODO: Implement, test
+    for(var prop in obj) {
+      str=str.replace(new RegExp('{{'+prop+'}}','g'), obj[prop]);
     }
-  } else {
-    throw new TypeError('You must provide at least a string and language');
-  }
-};
+    return str;
+  };
 
-jUtils.slugify = function(str) {
-  //TODO: Doc, test
-  var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;",
-      to   = "aaaaaeeeeeiiiiooooouuuunc------",
-      i, len;
+  $.hashCode = function(str){
+    //TODO: Doc, test
+    var hash = 0,
+        i, len, c;
+    if (str.length === 0) return hash;
+    for (i=0, len=str.length; i<len; i++) {
+        c     = str.charCodeAt(i);
+        hash  = ((hash<<5)-hash)+c;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+  };
 
-  str = str.replace(/^\s+|\s+$/g, ''); // trim
-  str = str.toLowerCase();
+  /**
+   * Stored and returns text translations.
+   * @requires JUtils.hashCode
+   * @param  {String} str         Text to be translated.
+   * @param  {String} lang        The language.
+   * @param  {String} translation If specified, stores the translation.
+   * @return {String}             Translated text.
+   */
+  $.translate = function(str, lang, translation) {
+    var translations = $.getVariable('translations'),
+        strHash;
+    if (!translations) translations = $.storeVariable('translations', {});
+    if ($.isString(str) && $.isString(lang)) {
+      strHash = $.hashCode(str + lang);
+      if ($.isString(translation)) {
+        // Store the translation
+        translations[strHash] = translation;
+        return translation;
+      } else {
+        // Return the translation
+        return translations[strHash];
+      }
+    } else {
+      throw new TypeError('You must provide at least a string and language');
+    }
+  };
 
-  // remove accents, swap ñ for n, etc
-  for (i=0, len=from.length ; i<len ; i++) {
-    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-  }
+  $.slugify = function(str) {
+    //TODO: Doc, test
+    var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;",
+        to   = "aaaaaeeeeeiiiiooooouuuunc------",
+        i, len;
 
-  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-    .replace(/\s+/g, '-') // collapse whitespace and replace by -
-    .replace(/-+/g, '-'); // collapse dashes
+    str = str.replace(/^\s+|\s+$/g, ''); // trim
+    str = str.toLowerCase();
 
-  return str;
-};
+    // remove accents, swap ñ for n, etc
+    for (i=0, len=from.length ; i<len ; i++) {
+      str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    }
 
+    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+      .replace(/\s+/g, '-') // collapse whitespace and replace by -
+      .replace(/-+/g, '-'); // collapse dashes
+
+    return str;
+  };
+
+}(jUtils))

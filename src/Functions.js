@@ -2,6 +2,10 @@
 
 /* global jUtils:true */
 
-jUtils.storeConstant = function() {
-  //TODO: implement
-};
+(function($) {
+  
+  $.storeConstant = function() {
+    //TODO: implement
+  };
+  
+}(jUtils));
