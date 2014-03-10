@@ -1,5 +1,2 @@
 //TODO: Make methods chainable
-//TODO: indexes : [index]
-//TODO: findAll : [element]
-//TODO: any : true/false
-//TODO: all : true/false
+//TODO: Convert source files to modules

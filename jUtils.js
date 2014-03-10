@@ -1,4 +1,4 @@
-/*! jUtils 2014-03-07 */
+/*! jUtils 2014-03-10 */
 // =================================== MAIN ===================================
 
 /* global HTMLElement:false */
@@ -309,20 +309,21 @@ jUtils.ajaxGet = function(url, success, error) {
 
 // ================================ COLLECTIONS ===============================
 
-/* global jUtils:true */
+/* global $:true */
 
-/**
+(function($){
+  /**
  * Replaces all collection components that satisfy the given condition.
  * @method replace
- * @memberOf jUtils.Collections
+ * @memberOf $.Collections
  * @param  {Collection} col  Collection of items.
  * @param  {Any} replaceWith Collection elements that satisfy the given condition will be replaced by this.
  * @return {Collection}      The resulting collection after replacing.
  */
-jUtils.replace = function(col, replaceWith, condition) {
-  jUtils.forEach(col, function(value, index, object) {
+$.replace = function(col, replaceWith, condition) {
+  $.forEach(col, function(value, index, object) {
     if (!condition || condition(value, index, object)) {
-      if (jUtils.isFunction(replaceWith)) {
+      if ($.isFunction(replaceWith)) {
         col[index] = replaceWith(col[index], index, col);  
       } else {
         col[index] = replaceWith;
@@ -331,6 +332,44 @@ jUtils.replace = function(col, replaceWith, condition) {
   });
   return col;
 };
+
+$.indexes = function(col, cond, context) {
+  //TODO: Doc, test
+  var results = [];
+  $.forEach(col, function(elem, index, obj) {
+    if (cond.call(context, elem, index, obj)) {
+      results.push(index);
+    }
+  });
+  return results;
+};
+
+$.findAll = function(col, cond, context) {
+  //TODO: Doc, test
+  var results = [];
+  $.forEach(col, function(elem, index, obj) {
+    if (cond.call(context, elem, index, obj)) {
+      results.push(elem);
+    }
+  });
+  return results;
+};
+
+$.all = function(col, cond, context) {
+  //TODO: Doc, test
+  return $.indexes(col, cond, context).length === col.length;
+};
+
+$.any = function(col, cond, context) {
+  //TODO: Doc, test
+  var first = $.first(col, cond, context);
+  return $.isObject(first);
+};
+  
+  
+}(jUtils));
+
+
 // ================================= FUNCTIONS ================================
 
 /* global jUtils:true */
