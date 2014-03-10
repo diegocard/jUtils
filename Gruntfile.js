@@ -4,14 +4,16 @@ module.exports = function(grunt) {
 
   var header = '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
       allSources = [
-        'src/Core.js', 
-        'src/Ajax.js', 
-        'src/Collections.js', 
-        'src/Functions.js', 
-        'src/Misc.js',
-        'src/Objects.js', 
-        'src/RegExp.js', 
-        'src/Strings.js', 
+        'build/topper.js',
+        'src/core.js', 
+        'src/ajax.js', 
+        'src/collections.js', 
+        'src/functions.js', 
+        'src/misc.js',
+        'src/objects.js', 
+        'src/regExp.js', 
+        'src/strings.js',
+        'build/footer.js'
       ];
 
   // Project configuration.
@@ -26,13 +28,22 @@ module.exports = function(grunt) {
         dest: 'jUtils.js'
       },
     },
+    "jsbeautifier" : {
+      files : 'jUtils.js',
+      options: {
+        js: {
+          indentSize: 2,
+          indentWithTabs: false
+        }
+      }
+    },
     uglify: {
       options: {
         banner: header,
         report: 'gzip'
       },
       build: {
-        src: allSources,
+        src: 'jUtils.js',
         dest: 'jUtils.min.js'
       }
     },
@@ -65,6 +76,7 @@ module.exports = function(grunt) {
 
   // Modules
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-jsbeautifier');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-connect');
@@ -73,6 +85,6 @@ module.exports = function(grunt) {
   // Tasks
   grunt.registerTask('test', ['connect', 'qunit']);
   grunt.registerTask('doc', ['jsdoc']);
-  grunt.registerTask('default', ['concat', 'uglify', 'test']);
+  grunt.registerTask('default', ['concat', 'jsbeautifier', 'uglify', 'test']);
 
 };

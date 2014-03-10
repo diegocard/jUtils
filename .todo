@@ -1,2 +1,4 @@
-//TODO: Make methods chainable
-//TODO: Convert source files to modules
+// TODO: Make methods chainable
+// TODO: Convert source files to modules
+// TODO: Check if method chaining works, add to other methods
+// TODO: Combine getJSON, ajaxPost and ajaxGet into a single ajax function?

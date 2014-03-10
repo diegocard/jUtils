@@ -1,261 +1,191 @@
 /*! jUtils 2014-03-10 */
-// =================================== MAIN ===================================
-
-/* global HTMLElement:false */
-
 /**
  * jUtils main object
  * @module jUtils
  */
-(function (global) {
+(function(global) {
   "use strict";
 
   // Private variables
-  var internal = {
-        global: global,
-      }, $;
+  var $ = {},
+    internal = {
+      global: global,
+    };
 
   // Check that jUtils is not already defined.
   if (global.jUtils) {
     return;
   }
+  // =================================== MAIN ===================================
 
-  $ = {
+  /* global $:true, HTMLElement:false, internal:true */
 
-    /**
-     * Returns the global object.
-     * @memberOf jUtils.Main
-     * @return {Object} The global object.
-     */
-    getGlobal : function() {
-      return internal.global;
-    },
-
-    /**
-     * Checks if the given object is equal to the global object.
-     * @memberOf jUtils.Main
-     * @param  {Any} elem A given element.
-     * @return {Boolean}  True if the given element is equal to the global object,
-     *                    false otherwise.
-     */
-    isGlobal : function(elem) {
-      return elem === internal.global;
-    },
-
-    /**
-     * Stores a private variable to jUtils. 
-     * If the variable was already defined, it will be overridden.
-     * This variable can be used through the getVariable method.
-     * @param  {String} name  The variable's name.
-     * @param  {Any}    value Value stored in the given variable.
-     * @return {Bool}         True if the variable was successfully stored,
-     *                        false otherwise.
-     */
-    storeVariable : function(name, value) {
-      if ($.isString(name)) {
-        internal[name] = value;
-        return internal[name];
-      } else {
-        throw new TypeError("You must specify a variable name");
-      }
-    },
-
-    /**
-     * Given its name, returns the value stored in a private variable of the jUtils module.
-     * Returns undefined if the variable was not defined previously.
-     * @param  {String} name Internal variable name.
-     * @return {Any}         Value stored in the private variable, if found.
-     */
-    getVariable : function(name) {
-      if ($.isString(name)) {
-        return internal[name];
-      } else {
-        throw new TypeError("You must specify a variable name");
-      }
-    },
-
-    /**
-     * Returns an array with the property names for the given object.
-     * If obj is not an object, then an exception is thrown.
-     * @memberOf jUtils.Main
-     * @param  {Object} obj The given object.
-     * @return {Array}      Array of property names.
-     */
-    getKeys : function(obj) {
-      var keys = [],
-          key;
-      if (!$.isObject(obj)) {
-        throw new TypeError("Invalid object");
-      }
-      for (key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          keys.push(key);
-        }
-      }
-      return keys;
-    },
-
-    /**
-     * Concise and efficient forEach implementation.
-     * @memberOf jUtils.Main
-     * @param  {Object} obj     Elements to be iterated.
-     * @param  {Function} func  Function applied to the elements in obj.
-     * @param  {Object} context Context for func.
-     */
-    forEach : function(obj, func, context) {
-      var i, len, keys;
-      if ($.isStrictlyObject(obj)) {
-        keys = $.getKeys(obj);
-        for (i=0, len=keys.length; i<len; i+=1) {
-          func.call(context, obj[keys[i]], keys[i], obj);
-        }
-      } else {
-        for (i=0, len=obj.length; i<len; i+=1) {
-          func.call(context, obj[i], i, obj);
-        }
-      }
-    },
-    
-    first : function(obj, cond, context) {
-      // TODO: DOC
-      var i, len, keys;
-      if ($.isStrictlyObject(obj)) {
-        keys = $.getKeys(obj);
-        for (i=0, len=keys.length; i<len; i+=1) {
-          if (cond.call(context, obj[keys[i]], keys[i], obj)) {
-            return  { element:obj[keys[i]], key:keys[i] };
-          }
-        }
-      } else {
-        for (i=0, len=obj.length; i<len; i+=1) {
-          if (cond.call(context, obj[i], i, obj)) {
-            return { element:obj[i], index:i };
-          }
-        }
-      }
-    },
-    
-    /**
-     * Checks if the given element is an array.
-     * @memberOf jUtils.Main
-     * @param  {Any}     arr Element to be checked.
-     * @return {Boolean}     True if the given element is an array,
-     *                       false otherwise.
-     */
-    isArray : function(arr) {
-      return Object.prototype.toString.call(arr) == "[object Array]";
-    },
-
-    /**
-     * Checks if the given element is an object (includes arrays but not functions).
-     * @memberOf jUtils.Main
-     * @param  {Any}     obj Element to be checked.
-     * @return {Boolean}     True if the given element is an array,
-     *                       false otherwise.
-     */
-    isObject : function(obj) {
-      return obj === Object(obj) && !$.isFunction(obj);
-    },
-
-    /**
-     * Checks if the given element is an object (does not include arrays and functions).
-     * @memberOf jUtils.Main
-     * @param  {Any}     obj Element to be checked.
-     * @return {Boolean}     True if the given element is only an object,
-     *                       false otherwise.
-     */
-    isStrictlyObject : function(obj) {
-      return $.isObject(obj) && !$.isArray(obj);
-    },
-
-    /**
-     * Checks if the given element is boolean.
-     * @memberOf jUtils.Main
-     * @param  {Any}     bool Element to be checked.
-     * @return {Boolean}      True if the given element is a boolean value,
-     *                        false otherwise.
-     */
-    isBoolean : function(bool) {
-      return bool === true || bool === false;
-    },
-
-    /**
-     * Checks if the given element is a string.
-     * @memberOf jUtils.Main
-     * @param  {Any}     str Element to be checked.
-     * @return {Boolean}     True if the given element is a string,
-     *                       false otherwise.
-     */
-    isString : function(str) {
-      return Object.prototype.toString.call(str) === "[object String]";
-    },
-
-    /**
-     * Checks if the given element is a function.
-     * @memberOf jUtils.Main
-     * @param  {Any}     fun Element to be checked.
-     * @return {Boolean}     True if the given element is a function,
-     *                       false otherwise.
-     */
-    isFunction : function(fun) {
-      return Object.prototype.toString.call(fun) === "[object Function]";
-    },
-
-    /**
-     * Checks if the given element is undefined.
-     * @memberOf jUtils.Main
-     * @param  {Any}     obj Element to be checked.
-     * @return {Boolean}     True if the given element is undefined,
-     *                       false otherwise.
-     */
-    isUndefined : function(obj) {
-      return typeof obj === "undefined";
-    },
-
-    /**
-     * Checks if the given element is a number.
-     * @memberOf jUtils.Main
-     * @param  {Any}     num Element to be checked.
-     * @return {Boolean}     True if the given element is a number,
-     *                       false otherwise.
-     */
-    isNumeric : function(num){
-      return !isNaN(parseFloat(num)) && isFinite(num);
-    },
-    
-    /**
-     * Checks if the given element is an HTML element.
-     * @memberOf jUtils.Main
-     * @param  {Any}     element Element to be checked.
-     * @return {Boolean}         True if the given element is an HTML element,
-     *                           false otherwise.
-     */
-    isHtmlElement : function(element){
-      return element instanceof HTMLElement;
-    },
+  /**
+   * Returns the global object.
+   * @memberOf jUtils.Main
+   * @return {Object} The global object.
+   */
+  $.getGlobal = function() {
+    return internal.global;
   };
-  
-  global.jUtils = $;
-  
-}(this));
-// =================================== AJAX ===================================
 
-/* global jUtils:true, XMLHttpRequest:false */
+  /**
+   * Checks if the given object is equal to the global object.
+   * @memberOf jUtils.Main
+   * @param  {Any} elem A given element.
+   * @return {Boolean}  True if the given element is equal to the global object,
+   *                    false otherwise.
+   */
+  $.isGlobal = function(elem) {
+    return elem === internal.global;
+  };
 
-(function($) {
-  
+  /**
+   * Stores a private variable to jUtils.
+   * If the variable was already defined, it will be overridden.
+   * This variable can be used through the getVariable method.
+   * @param  {String} name  The variable's name.
+   * @param  {Any}    value Value stored in the given variable.
+   * @return {Bool}         True if the variable was successfully stored,
+   *                        false otherwise.
+   */
+  $.storeVariable = function(name, value) {
+    if ($.isString(name)) {
+      internal[name] = value;
+      return internal[name];
+    } else {
+      throw new TypeError("You must specify a variable name");
+    }
+  };
+
+  /**
+   * Given its name, returns the value stored in a private variable of the jUtils module.
+   * Returns undefined if the variable was not defined previously.
+   * @param  {String} name Internal variable name.
+   * @return {Any}         Value stored in the private variable, if found.
+   */
+  $.getVariable = function(name) {
+    if ($.isString(name)) {
+      return internal[name];
+    } else {
+      throw new TypeError("You must specify a variable name");
+    }
+  };
+
+  /**
+   * Checks if the given element is an array.
+   * @memberOf jUtils.Main
+   * @param  {Any}     arr Element to be checked.
+   * @return {Boolean}     True if the given element is an array,
+   *                       false otherwise.
+   */
+  $.isArray = function(arr) {
+    return Object.prototype.toString.call(arr) == "[object Array]";
+  };
+
+  /**
+   * Checks if the given element is an object (includes arrays but not functions).
+   * @memberOf jUtils.Main
+   * @param  {Any}     obj Element to be checked.
+   * @return {Boolean}     True if the given element is an array,
+   *                       false otherwise.
+   */
+  $.isObject = function(obj) {
+    return obj === Object(obj) && !$.isFunction(obj);
+  };
+
+  /**
+   * Checks if the given element is an object (does not include arrays and functions).
+   * @memberOf jUtils.Main
+   * @param  {Any}     obj Element to be checked.
+   * @return {Boolean}     True if the given element is only an object,
+   *                       false otherwise.
+   */
+  $.isStrictlyObject = function(obj) {
+    return $.isObject(obj) && !$.isArray(obj);
+  };
+
+  /**
+   * Checks if the given element is boolean.
+   * @memberOf jUtils.Main
+   * @param  {Any}     bool Element to be checked.
+   * @return {Boolean}      True if the given element is a boolean value,
+   *                        false otherwise.
+   */
+  $.isBoolean = function(bool) {
+    return bool === true || bool === false;
+  };
+
+  /**
+   * Checks if the given element is a string.
+   * @memberOf jUtils.Main
+   * @param  {Any}     str Element to be checked.
+   * @return {Boolean}     True if the given element is a string,
+   *                       false otherwise.
+   */
+  $.isString = function(str) {
+    return Object.prototype.toString.call(str) === "[object String]";
+  };
+
+  /**
+   * Checks if the given element is a function.
+   * @memberOf jUtils.Main
+   * @param  {Any}     fun Element to be checked.
+   * @return {Boolean}     True if the given element is a function,
+   *                       false otherwise.
+   */
+  $.isFunction = function(fun) {
+    return Object.prototype.toString.call(fun) === "[object Function]";
+  };
+
+  /**
+   * Checks if the given element is undefined.
+   * @memberOf jUtils.Main
+   * @param  {Any}     obj Element to be checked.
+   * @return {Boolean}     True if the given element is undefined,
+   *                       false otherwise.
+   */
+  $.isUndefined = function(obj) {
+    return typeof obj === "undefined";
+  };
+
+  /**
+   * Checks if the given element is a number.
+   * @memberOf jUtils.Main
+   * @param  {Any}     num Element to be checked.
+   * @return {Boolean}     True if the given element is a number,
+   *                       false otherwise.
+   */
+  $.isNumeric = function(num) {
+    return !isNaN(parseFloat(num)) && isFinite(num);
+  };
+
+  /**
+   * Checks if the given element is an HTML element.
+   * @memberOf jUtils.Main
+   * @param  {Any}     element Element to be checked.
+   * @return {Boolean}         True if the given element is an HTML element,
+   *                           false otherwise.
+   */
+  $.isHtmlElement = function(element) {
+    return element instanceof HTMLElement;
+  };
+  // =================================== AJAX ===================================
+
+  /* global $:true, XMLHttpRequest:false */
+
   /*
    * RESTRICTION: IE8+
    */
   $.getJSON = function(url, success, error) {
     //TODO: Doc, test, add extra parameters
     var request = new XMLHttpRequest(),
-        data;
+      data;
     request.open('GET', url, true);
 
     request.onreadystatechange = function() {
-      if (this.readyState === 4){
-        if (this.status >= 200 && this.status < 400){
+      if (this.readyState === 4) {
+        if (this.status >= 200 && this.status < 400) {
           data = JSON.parse(this.responseText);
           success(data);
         } else {
@@ -287,12 +217,12 @@
   $.ajaxGet = function(url, success, error) {
     // TODO: Doc, test
     var request = new XMLHttpRequest(),
-        resp;
+      resp;
     request.open('GET', url, true);
 
     request.onreadystatechange = function() {
-      if (this.readyState === 4){
-        if (this.status >= 200 && this.status < 400){
+      if (this.readyState === 4) {
+        if (this.status >= 200 && this.status < 400) {
           resp = this.responseText;
           success(resp);
         } else {
@@ -304,17 +234,77 @@
     request.send();
     request = null;
   };
+  // ================================ COLLECTIONS ===============================
 
-}(jUtils));
+  /* global $:true */
 
-// TODO: Check if method chaining works, add to other methods
-// TODO: Combine getJSON, ajaxPost and ajaxGet into a single ajax function?
+  /**
+   * Returns an array with the property names for the given object.
+   * If obj is not an object, then an exception is thrown.
+   * @memberOf jUtils.Main
+   * @param  {Object} obj The given object.
+   * @return {Array}      Array of property names.
+   */
+  $.getKeys = function(obj) {
+    var keys = [],
+      key;
+    if (!$.isObject(obj)) {
+      throw new TypeError("Invalid object");
+    }
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        keys.push(key);
+      }
+    }
+    return keys;
+  };
 
-// ================================ COLLECTIONS ===============================
+  /**
+   * Concise and efficient forEach implementation.
+   * @memberOf jUtils.Main
+   * @param  {Object} obj     Elements to be iterated.
+   * @param  {Function} func  Function applied to the elements in obj.
+   * @param  {Object} context Context for func.
+   */
+  $.forEach = function(obj, func, context) {
+    var i, len, keys;
+    if ($.isStrictlyObject(obj)) {
+      keys = $.getKeys(obj);
+      for (i = 0, len = keys.length; i < len; i += 1) {
+        func.call(context, obj[keys[i]], keys[i], obj);
+      }
+    } else {
+      for (i = 0, len = obj.length; i < len; i += 1) {
+        func.call(context, obj[i], i, obj);
+      }
+    }
+  };
 
-/* global jUtils:true */
+  $.first = function(obj, cond, context) {
+    // TODO: DOC
+    var i, len, keys;
+    if ($.isStrictlyObject(obj)) {
+      keys = $.getKeys(obj);
+      for (i = 0, len = keys.length; i < len; i += 1) {
+        if (cond.call(context, obj[keys[i]], keys[i], obj)) {
+          return {
+            element: obj[keys[i]],
+            key: keys[i]
+          };
+        }
+      }
+    } else {
+      for (i = 0, len = obj.length; i < len; i += 1) {
+        if (cond.call(context, obj[i], i, obj)) {
+          return {
+            element: obj[i],
+            index: i
+          };
+        }
+      }
+    }
+  };
 
-(function($){
   /**
    * Replaces all collection components that satisfy the given condition.
    * @method replace
@@ -328,7 +318,7 @@
     $.forEach(col, function(value, index, object) {
       if (!condition || condition(value, index, object)) {
         if ($.isFunction(replaceWith)) {
-          col[index] = replaceWith(col[index], index, col);  
+          col[index] = replaceWith(col[index], index, col);
         } else {
           col[index] = replaceWith;
         }
@@ -369,27 +359,17 @@
     var first = $.first(col, cond, context);
     return $.isObject(first);
   };
-  
-}(jUtils));
+  // ================================= FUNCTIONS ================================
 
+  /* global $:true */
 
-// ================================= FUNCTIONS ================================
-
-/* global jUtils:true */
-
-(function($) {
-  
   $.storeConstant = function() {
     //TODO: implement
   };
-  
-}(jUtils));
 
-// =============================== MISCELANEOUS ===============================
+  // =============================== MISCELANEOUS ===============================
 
-/* global jUtils:true */
-
-(function($) {
+  /* global $:true */
 
   /**
    * Rounds the number to the given precision (amount of decimal digits).
@@ -400,47 +380,43 @@
    */
   $.setPrecision = function(number, precision) {
     var isNumeric = $.isNumeric,
-        prec;
+      prec;
     if (isNumeric(number) && isNumeric(precision)) {
       prec = Math.pow(10, precision);
-      return Math.round(number*prec) / prec;
+      return Math.round(number * prec) / prec;
     } else {
       throw new TypeError("You must specify a numeric number and precision");
     }
   };
 
-  $.equals = function(/* args */) {
+  $.equals = function( /* args */ ) {
     // TODO: Finish, compress, doc, test based on underscore tests
     var args = Array.prototype.slice.call(arguments),
-        equal2 = function(obj1, obj2) {
-          if (typeof obj1 !== typeof obj2) {
-            return false;
+      equal = function(obj1, obj2) {
+        if (typeof obj1 !== typeof obj2) {
+          return false;
+        } else {
+          if ($.isFunction(obj1)) {
+            return obj1.toString === obj2.toString();
           } else {
-            if ($.isFunction(obj1)) {
-              return obj1.toString === obj2.toString();
-            } else {
-              return JSON.stringify(obj1) === JSON.stringify(obj2);
-            }
+            return JSON.stringify(obj1) === JSON.stringify(obj2);
           }
-          return equal && $.equals(obj2, rest);
-        };
+        }
+        return equal && $.equals(obj2, rest);
+      };
     return $.all(args, function(elem, index) {
       // All arguments are equal to the previous one
       if (index > 0) {
-        return equal2(elem, args[index - 1]);
+        return equal(elem, args[index - 1]);
       } else {
         return true;
       }
     });
   };
-  
-}(jUtils));
-// ================================= OBJECTS =================================
+  // ================================= OBJECTS =================================
 
-/* global jUtils:true */
+  /* global $:true */
 
-(function($) {
-  
   /**
    * Counts the amount of properties in an object (keys).
    * Not that this method only counts own properties.
@@ -467,7 +443,7 @@
     var out, i, len, prop;
     if ($.isArray(obj)) {
       out = [];
-      for (i=0, len = obj.length; i<len; i+=1) {
+      for (i = 0, len = obj.length; i < len; i += 1) {
         out[i] = $.deepCopy(obj[i]);
       }
       return out;
@@ -482,28 +458,20 @@
     return obj;
   };
 
-}(jUtils));
 
+  // ============================ REGULAR EXPRESSIONS ===========================
 
-// ============================ REGULAR EXPRESSIONS ===========================
+  /* global $:true */
 
-/* global jUtils:true */
-
-(function($) {
-  
   $.emailRegExp = function(email) {
     // TODO: Doc and test
     return (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
   };
-  
-}(jUtils));
 
-// ================================== STRINGS =================================
+  // ================================== STRINGS =================================
 
-/* global jUtils:true */
+  /* global $:true */
 
-(function($) {
-  
   /**
    * Format a string in a similar way to Java or C#.
    * @method format
@@ -511,9 +479,9 @@
    * @param  {string} str Pre-format string.
    * @return {string}     Formatted string.
    */
-  $.format = function (str) {
+  $.format = function(str) {
     var args = Array.prototype.slice.call(arguments, 1),
-        sprintfRegex = /\{(\d+)\}/g;
+      sprintfRegex = /\{(\d+)\}/g;
 
     return str.replace(sprintfRegex, function(match, number) {
       return number in args ? args[number] : match;
@@ -522,21 +490,21 @@
 
   $.microTemplate = function(str, obj) {
     // TODO: Implement, test
-    for(var prop in obj) {
-      str=str.replace(new RegExp('{{'+prop+'}}','g'), obj[prop]);
+    for (var prop in obj) {
+      str = str.replace(new RegExp('{{' + prop + '}}', 'g'), obj[prop]);
     }
     return str;
   };
 
-  $.hashCode = function(str){
+  $.hashCode = function(str) {
     //TODO: Doc, test
     var hash = 0,
-        i, len, c;
+      i, len, c;
     if (str.length === 0) return hash;
-    for (i=0, len=str.length; i<len; i++) {
-        c     = str.charCodeAt(i);
-        hash  = ((hash<<5)-hash)+c;
-        hash |= 0; // Convert to 32bit integer
+    for (i = 0, len = str.length; i < len; i++) {
+      c = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + c;
+      hash |= 0; // Convert to 32bit integer
     }
     return hash;
   };
@@ -551,7 +519,7 @@
    */
   $.translate = function(str, lang, translation) {
     var translations = $.getVariable('translations'),
-        strHash;
+      strHash;
     if (!translations) translations = $.storeVariable('translations', {});
     if ($.isString(str) && $.isString(lang)) {
       strHash = $.hashCode(str + lang);
@@ -571,22 +539,24 @@
   $.slugify = function(str) {
     //TODO: Doc, test
     var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;",
-        to   = "aaaaaeeeeeiiiiooooouuuunc------",
-        i, len;
+      to = "aaaaaeeeeeiiiiooooouuuunc------",
+      i, len;
 
     str = str.replace(/^\s+|\s+$/g, ''); // trim
     str = str.toLowerCase();
 
     // remove accents, swap ñ for n, etc
-    for (i=0, len=from.length ; i<len ; i++) {
+    for (i = 0, len = from.length; i < len; i++) {
       str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
     }
 
     str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-      .replace(/\s+/g, '-') // collapse whitespace and replace by -
-      .replace(/-+/g, '-'); // collapse dashes
+    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+    .replace(/-+/g, '-'); // collapse dashes
 
     return str;
   };
 
-}(jUtils))
+  global.jUtils = $;
+
+}(this));

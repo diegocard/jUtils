@@ -1,11 +1,7 @@
 // ================================= FUNCTIONS ================================
 
-/* global jUtils:true */
+/* global $:true */
 
-(function($) {
-  
-  $.storeConstant = function() {
-    //TODO: implement
-  };
-  
-}(jUtils));
+$.storeConstant = function() {
+  //TODO: implement
+};
