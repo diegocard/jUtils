@@ -28,7 +28,7 @@ $.getKeys = function(obj) {
  * @memberOf jUtils.Main
  * @param  {Object} obj     Elements to be iterated.
  * @param  {Function} func  Function applied to the elements in obj.
- * @param  {Object} context Context for func.
+ * @param  {Object} context Optional: Context for func.
  */
 $.forEach = function(obj, func, context) {
   var i, len, keys;
@@ -44,8 +44,14 @@ $.forEach = function(obj, func, context) {
   }
 };
 
+/**
+ * Returns the first element that fullfills the given condition, and its index.
+ * @memberOf jUtils.Main
+ * @param  {Object} obj     Elements to be iterated.
+ * @param  {Function} cond  Condition checked until an element fullfills it.
+ * @param  {Object} context Optional: Context for the condition.
+ */
 $.first = function(obj, cond, context) {
-  // TODO: DOC
   var i, len, keys;
   if ($.isStrictlyObject(obj)) {
     keys = $.getKeys(obj);
@@ -76,7 +82,7 @@ $.replace = function(col, replaceWith, condition) {
   $.forEach(col, function(value, index, object) {
     if (!condition || condition(value, index, object)) {
       if ($.isFunction(replaceWith)) {
-        col[index] = replaceWith(col[index], index, col);  
+        col[index] = replaceWith(col[index], index, col);
       } else {
         col[index] = replaceWith;
       }
