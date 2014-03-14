@@ -2,3 +2,17 @@
 // TODO: Convert source files to modules
 // TODO: Check if method chaining works, add to other methods
 // TODO: Combine getJSON, ajaxPost and ajaxGet into a single ajax function?
+
+//TODO: Test new forEach implementation (iterate): http://stackoverflow.com/questions/10466436/javascript-foreach-implementation
+
+$:iterate = function(col, func, context) {
+  var len = col.length >>> 0;
+  
+  for (var i = 0; i < len; i++) {
+    if (i in col) {
+      func.call(context, col[i], i, col);
+    }
+  }
+}
+
+// TODO: Rename obj to col in Collections.js

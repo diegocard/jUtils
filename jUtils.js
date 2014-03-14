@@ -1,4 +1,4 @@
-/*! jUtils 2014-03-10 */
+/*! jUtils 2014-03-14 */
 /**
  * jUtils main object
  * @module jUtils
@@ -264,7 +264,7 @@
    * @memberOf jUtils.Main
    * @param  {Object} obj     Elements to be iterated.
    * @param  {Function} func  Function applied to the elements in obj.
-   * @param  {Object} context Context for func.
+   * @param  {Object} context Optional: Context for func.
    */
   $.forEach = function(obj, func, context) {
     var i, len, keys;
@@ -280,8 +280,14 @@
     }
   };
 
+  /**
+   * Returns the first element that fullfills the given condition, and its index.
+   * @memberOf jUtils.Main
+   * @param  {Object} obj     Elements to be iterated.
+   * @param  {Function} cond  Condition checked until an element fullfills it.
+   * @param  {Object} context Optional: Context for the condition.
+   */
   $.first = function(obj, cond, context) {
-    // TODO: DOC
     var i, len, keys;
     if ($.isStrictlyObject(obj)) {
       keys = $.getKeys(obj);
