@@ -1,4 +1,4 @@
-/*! jUtils 2014-03-14 */
+/*! jUtils 2014-03-17 */
 /**
  * jUtils main object
  * @module jUtils

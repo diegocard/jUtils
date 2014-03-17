@@ -4,16 +4,10 @@ module.exports = function(grunt) {
 
   var header = '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
       allSources = [
-        'build/topper.js',
-        'src/core.js', 
-        'src/ajax.js', 
-        'src/collections.js', 
-        'src/functions.js', 
-        'src/misc.js',
-        'src/objects.js', 
-        'src/regExp.js', 
-        'src/strings.js',
-        'build/footer.js'
+        'src/core/topper.js',
+        'src/core/core.js', 
+        'src/modules/*.js',
+        'src/core/footer.js'
       ];
 
   // Project configuration.
