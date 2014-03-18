@@ -2,6 +2,7 @@
 // TODO: Convert source files to modules
 // TODO: Check if method chaining works, add to other methods
 // TODO: Combine getJSON, ajaxPost and ajaxGet into a single ajax function?
+// TODO: Promises
 
 //TODO: Test new forEach implementation (iterate): http://stackoverflow.com/questions/10466436/javascript-foreach-implementation
 
