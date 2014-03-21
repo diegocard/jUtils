@@ -91,8 +91,19 @@ $.replace = function(col, replaceWith, condition) {
   return col;
 };
 
+$.map = function(col, func, context) {
+  
+}
+
+/**
+ * @method indexes
+ * @memberOf jUtils.Collections
+ * @param {Collection} col Collection of items.
+ * @param {Function} cond  Condition that returned elements must satisfy.
+ * @return {Collection}    Indexes of the found items.
+ */
 $.indexes = function(col, cond, context) {
-  //TODO: Doc, test
+  // TODO: Test
   var results = [];
   $.forEach(col, function(elem, index, obj) {
     if (cond.call(context, elem, index, obj)) {
