@@ -1,4 +1,4 @@
-/*! jUtils 2014-03-18 */
+/*! jUtils 2014-03-23 */
 /**
  * jUtils main object
  * @module jUtils
@@ -269,8 +269,38 @@
     return col;
   };
 
+  $.map = function(col, func, context) {
+    // TODO: Doc, Test
+    var results = [];
+    $.forEach(col, function(elem, index, obj) {
+      results.push(func.call(context, elem, index, obj));
+    });
+    return results;
+  };
+
+  $.reduce = function(col, func, context) {
+    // TODO: Doc, Test
+    var initial = false,
+      memo;
+    $.each(col, function(value, index, list) {
+      if (!initial) {
+        memo = value;
+        initial = true;
+      } else {
+        memo = func.call(context, memo, value, index, list);
+      }
+    });
+  };
+
+  /**
+   * @method indexes
+   * @memberOf jUtils.Collections
+   * @param {Collection} col Collection of items.
+   * @param {Function} cond  Condition that returned elements must satisfy.
+   * @return {Collection}    Indexes of the found items.
+   */
   $.indexes = function(col, cond, context) {
-    //TODO: Doc, test
+    // TODO: Test, use mapReduce
     var results = [];
     $.forEach(col, function(elem, index, obj) {
       if (cond.call(context, elem, index, obj)) {
@@ -281,7 +311,7 @@
   };
 
   $.findAll = function(col, cond, context) {
-    //TODO: Doc, test
+    //TODO: Doc, test, use mapReduce
     var results = [];
     $.forEach(col, function(elem, index, obj) {
       if (cond.call(context, elem, index, obj)) {
