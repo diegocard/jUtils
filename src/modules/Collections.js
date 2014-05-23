@@ -9,7 +9,7 @@
  * @param  {Object} obj The given object.
  * @return {Array}      Array of property names.
  */
-$.getKeys = function(obj) {
+$.getKeys = function (obj) {
   var keys = [],
       key;
   if (!$.isObject(obj)) {
@@ -30,15 +30,15 @@ $.getKeys = function(obj) {
  * @param  {Function} func  Function applied to the elements in obj.
  * @param  {Object} context Optional: Context for func.
  */
-$.forEach = function(obj, func, context) {
+$.forEach = function (obj, func, context) {
   var i, len, keys;
   if ($.isStrictlyObject(obj)) {
     keys = $.getKeys(obj);
-    for (i=0, len=keys.length; i<len; i+=1) {
+    for (i = 0, len = keys.length; i < len; i += 1) {
       func.call(context, obj[keys[i]], keys[i], obj);
     }
   } else {
-    for (i=0, len=obj.length; i<len; i+=1) {
+    for (i = 0, len = obj.length; i < len; i += 1) {
       func.call(context, obj[i], i, obj);
     }
   }
@@ -51,19 +51,25 @@ $.forEach = function(obj, func, context) {
  * @param  {Function} cond  Condition checked until an element fullfills it.
  * @param  {Object} context Optional: Context for the condition.
  */
-$.first = function(obj, cond, context) {
+$.first = function (obj, cond, context) {
   var i, len, keys;
   if ($.isStrictlyObject(obj)) {
     keys = $.getKeys(obj);
-    for (i=0, len=keys.length; i<len; i+=1) {
+    for (i = 0, len = keys.length; i < len; i += 1) {
       if (cond.call(context, obj[keys[i]], keys[i], obj)) {
-        return { element:obj[keys[i]], key:keys[i] };
+        return {
+          element: obj[keys[i]],
+          key: keys[i]
+        };
       }
     }
   } else {
-    for (i=0, len=obj.length; i<len; i+=1) {
+    for (i = 0, len = obj.length; i < len; i += 1) {
       if (cond.call(context, obj[i], i, obj)) {
-        return { element:obj[i], index:i };
+        return {
+          element: obj[i],
+          index: i
+        };
       }
     }
   }
@@ -78,8 +84,8 @@ $.first = function(obj, cond, context) {
  * @param  {Function} cond   Optional condition that replaced elements must satisfy.
  * @return {Collection}      The resulting collection after replacing.
  */
-$.replace = function(col, replaceWith, condition) {
-  $.forEach(col, function(value, index, object) {
+$.replace = function (col, replaceWith, condition) {
+  $.forEach(col, function (value, index, object) {
     if (!condition || condition(value, index, object)) {
       if ($.isFunction(replaceWith)) {
         col[index] = replaceWith(col[index], index, col);
@@ -91,9 +97,28 @@ $.replace = function(col, replaceWith, condition) {
   return col;
 };
 
-$.map = function(col, func, context) {
-  
-}
+$.map = function (col, func, context) {
+  // TODO: Doc, Test
+  var results = [];
+  $.forEach(col, function (elem, index, obj) {
+    results.push(func.call(context, elem, index, obj));
+  });
+  return results;
+};
+
+$.reduce = function (col, func, context) {
+  // TODO: Doc, Test
+  var initial = false,
+      memo;
+  $.each(col, function (value, index, list) {
+    if (!initial) {
+      memo = value;
+      initial = true;
+    } else {
+      memo = func.call(context, memo, value, index, list);
+    }
+  });
+};
 
 /**
  * @method indexes
@@ -102,10 +127,10 @@ $.map = function(col, func, context) {
  * @param {Function} cond  Condition that returned elements must satisfy.
  * @return {Collection}    Indexes of the found items.
  */
-$.indexes = function(col, cond, context) {
-  // TODO: Test
+$.indexes = function (col, cond, context) {
+  // TODO: Test, use mapReduce
   var results = [];
-  $.forEach(col, function(elem, index, obj) {
+  $.forEach(col, function (elem, index, obj) {
     if (cond.call(context, elem, index, obj)) {
       results.push(index);
     }
@@ -113,10 +138,10 @@ $.indexes = function(col, cond, context) {
   return results;
 };
 
-$.findAll = function(col, cond, context) {
-  //TODO: Doc, test
+$.findAll = function (col, cond, context) {
+  //TODO: Doc, test, use mapReduce
   var results = [];
-  $.forEach(col, function(elem, index, obj) {
+  $.forEach(col, function (elem, index, obj) {
     if (cond.call(context, elem, index, obj)) {
       results.push(elem);
     }
@@ -124,12 +149,12 @@ $.findAll = function(col, cond, context) {
   return results;
 };
 
-$.all = function(col, cond, context) {
+$.all = function (col, cond, context) {
   //TODO: Doc, test
   return $.indexes(col, cond, context).length === col.length;
 };
 
-$.any = function(col, cond, context) {
+$.any = function (col, cond, context) {
   //TODO: Doc, test
   var first = $.first(col, cond, context);
   return $.isObject(first);

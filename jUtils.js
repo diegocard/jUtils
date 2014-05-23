@@ -270,8 +270,27 @@
   };
 
   $.map = function(col, func, context) {
+    // TODO: Doc, Test
+    var results = [];
+    $.forEach(col, function(elem, index, obj) {
+      results.push(func.call(context, elem, index, obj));
+    });
+    return results;
+  };
 
-  }
+  $.reduce = function(col, func, context) {
+    // TODO: Doc, Test
+    var initial = false,
+      memo;
+    $.each(col, function(value, index, list) {
+      if (!initial) {
+        memo = value;
+        initial = true;
+      } else {
+        memo = func.call(context, memo, value, index, list);
+      }
+    });
+  };
 
   /**
    * @method indexes
@@ -281,7 +300,7 @@
    * @return {Collection}    Indexes of the found items.
    */
   $.indexes = function(col, cond, context) {
-    // TODO: Test
+    // TODO: Test, use mapReduce
     var results = [];
     $.forEach(col, function(elem, index, obj) {
       if (cond.call(context, elem, index, obj)) {
@@ -292,7 +311,7 @@
   };
 
   $.findAll = function(col, cond, context) {
-    //TODO: Doc, test
+    //TODO: Doc, test, use mapReduce
     var results = [];
     $.forEach(col, function(elem, index, obj) {
       if (cond.call(context, elem, index, obj)) {
