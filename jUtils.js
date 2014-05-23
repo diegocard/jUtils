@@ -1,4 +1,4 @@
-/*! jUtils 2014-03-18 */
+/*! jUtils 2014-05-23 */
 /**
  * jUtils main object
  * @module jUtils
@@ -269,8 +269,19 @@
     return col;
   };
 
+  $.map = function(col, func, context) {
+
+  }
+
+  /**
+   * @method indexes
+   * @memberOf jUtils.Collections
+   * @param {Collection} col Collection of items.
+   * @param {Function} cond  Condition that returned elements must satisfy.
+   * @return {Collection}    Indexes of the found items.
+   */
   $.indexes = function(col, cond, context) {
-    //TODO: Doc, test
+    // TODO: Test
     var results = [];
     $.forEach(col, function(elem, index, obj) {
       if (cond.call(context, elem, index, obj)) {
@@ -484,7 +495,9 @@
   $.microTemplate = function(str, obj) {
     // TODO: Implement, test
     for (var prop in obj) {
-      str = str.replace(new RegExp('{{' + prop + '}}', 'g'), obj[prop]);
+      if (obj.hasOwnProperty(prop)) {
+        str = str.replace(new RegExp('{{' + prop + '}}', 'g'), obj[prop]);
+      }
     }
     return str;
   };
